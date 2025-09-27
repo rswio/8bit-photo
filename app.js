@@ -85,6 +85,11 @@ class App {
     }
 
     async handleFileSelect(files) {
+    // Show preview of first valid image before processing
+    const previewCanvas = document.getElementById('originalCanvas');
+    previewCanvas.width = 1;
+    previewCanvas.height = 1;
+    previewCanvas.getContext('2d').clearRect(0, 0, 1, 1);
         const validFiles = Array.from(files).filter(file => 
             file.type.startsWith('image/') && 
             ['image/jpeg', 'image/png', 'image/webp'].includes(file.type)
@@ -100,16 +105,41 @@ class App {
             return;
         }
 
+        let previewSet = false;
         this.currentImages = [];
-        
         try {
             for (const file of validFiles) {
+                console.log('handleFileSelect: loading file', file);
                 const imageData = await this.loadImage(file);
+                console.log('handleFileSelect: loaded imageData', imageData);
+                // Validate imageData
+                if (!imageData || !imageData.imageData || !imageData.imageData.data || imageData.imageData.width <= 0 || imageData.imageData.height <= 0) {
+                    console.error('Invalid imageData:', imageData);
+                    this.showError('Error: One or more images could not be loaded or are invalid.');
+                    continue;
+                }
+                console.log('Valid imageData:', {
+                    width: imageData.imageData.width,
+                    height: imageData.imageData.height,
+                    dataLength: imageData.imageData.data.length
+                });
                 this.currentImages.push({
                     file,
-                    imageData,
+                    imageData: imageData.imageData,
                     canvas: imageData.canvas
                 });
+                // Show preview for first valid image
+                if (!previewSet) {
+                    previewCanvas.width = imageData.imageData.width;
+                    previewCanvas.height = imageData.imageData.height;
+                    previewCanvas.getContext('2d').putImageData(imageData.imageData, 0, 0);
+                    previewSet = true;
+                }
+            }
+
+            if (this.currentImages.length === 0) {
+                this.showError('No valid images to process.');
+                return;
             }
 
             if (this.currentImages.length === 1) {
@@ -133,39 +163,44 @@ class App {
                 const maxSize = 1024;
                 let width = img.naturalWidth || img.width;
                 let height = img.naturalHeight || img.height;
-                
+                console.log('loadImage: img loaded', { width, height });
                 // Ensure we have valid dimensions
                 if (!width || !height || width <= 0 || height <= 0) {
+                    console.error('loadImage: Invalid image dimensions', { width, height });
                     reject(new Error('Invalid image dimensions'));
                     return;
                 }
-                
                 if (width > maxSize || height > maxSize) {
                     const ratio = Math.min(maxSize / width, maxSize / height);
                     width = Math.floor(width * ratio);
                     height = Math.floor(height * ratio);
                 }
-
                 // Ensure minimum size
                 width = Math.max(1, width);
                 height = Math.max(1, height);
-
                 canvas.width = width;
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
-
                 const imageData = ctx.getImageData(0, 0, width, height);
+                console.log('loadImage: got imageData', {
+                    width: imageData.width,
+                    height: imageData.height,
+                    dataLength: imageData.data.length
+                });
                 resolve({ imageData, canvas });
             };
 
-            img.onerror = () => reject(new Error('Failed to load image'));
-            
+            img.onerror = (e) => {
+                console.error('loadImage: Failed to load image', e);
+                reject(new Error('Failed to load image'));
+            };
             // Handle both File objects and data URLs
             if (file instanceof File) {
                 img.src = URL.createObjectURL(file);
             } else if (typeof file === 'string') {
                 img.src = file;
             } else {
+                console.error('loadImage: Invalid file type', file);
                 reject(new Error('Invalid file type'));
             }
         });
@@ -203,7 +238,13 @@ class App {
 
     async processImages() {
         if (this.isProcessing) return;
-        
+
+        // Prevent processing if no image is loaded
+        if (!this.currentImages || this.currentImages.length === 0) {
+            this.showError('No image selected. Please upload an image before converting.');
+            return;
+        }
+
         this.isProcessing = true;
         this.showProcessingIndicator();
 
@@ -228,11 +269,28 @@ class App {
             document.getElementById('progressFill').style.width = `${progress}%`;
         };
 
-        const processedImageData = await this.processor.process(
-            image.imageData,
-            options,
-            progressCallback
-        );
+        // Validate imageData before processing
+        if (!image || !image.imageData || !image.imageData.data || image.imageData.width <= 0 || image.imageData.height <= 0) {
+            console.error('processSingleImage: Invalid imageData', image);
+            this.showError('Cannot process: Image data is invalid or missing.');
+            return;
+        }
+
+        // Log imageData for debugging
+        console.log('processSingleImage: imageData', image.imageData);
+
+        let processedImageData;
+        try {
+            processedImageData = await this.processor.process(
+                image.imageData,
+                options,
+                progressCallback
+            );
+        } catch (error) {
+            console.error('processSingleImage: Processing failed', error, image.imageData);
+            this.showError('Processing failed: ' + error.message);
+            return;
+        }
 
         this.displayResults(image.imageData, processedImageData);
     }
