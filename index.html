@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8-Bit Photo Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">🎮 8-Bit Photo Converter</h1>
+            <p class="subtitle">Transform your photos into retro 8-bit masterpieces!</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">📁</div>
+                        <h3>Drop your photos here</h3>
+                        <p>or click to browse</p>
+                        <div class="supported-formats">
+                            <small>Supports: JPEG, PNG, WebP</small>
+                        </div>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/jpeg,image/png,image/webp" hidden>
+                </div>
+            </section>
+
+            <!-- Conversion Options -->
+            <section class="options-section" id="optionsSection" style="display: none;">
+                <h3>🎨 Conversion Options</h3>
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label for="colorPalette">Color Palette:</label>
+                        <select id="colorPalette">
+                            <option value="gameboy">Game Boy (4 colors)</option>
+                            <option value="nes" selected>NES (64 colors)</option>
+                            <option value="atari">Atari 2600 (128 colors)</option>
+                            <option value="commodore">Commodore 64 (16 colors)</option>
+                            <option value="custom256">Custom (256 colors)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="ditheringType">Dithering:</label>
+                        <select id="ditheringType">
+                            <option value="none">None</option>
+                            <option value="floyd" selected>Floyd-Steinberg</option>
+                            <option value="ordered">Ordered Dithering</option>
+                            <option value="random">Random</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="pixelSize">Pixel Size:</label>
+                        <select id="pixelSize">
+                            <option value="1">Original</option>
+                            <option value="2" selected>2x2</option>
+                            <option value="4">4x4</option>
+                            <option value="8">8x8</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="brightness">Brightness:</label>
+                        <input type="range" id="brightness" min="-50" max="50" value="0" class="slider">
+                        <span id="brightnessValue">0</span>
+                    </div>
+                    <div class="option-group">
+                        <label for="contrast">Contrast:</label>
+                        <input type="range" id="contrast" min="-50" max="50" value="0" class="slider">
+                        <span id="contrastValue">0</span>
+                    </div>
+                </div>
+                <button id="processButton" class="process-btn">🎯 Convert to 8-Bit</button>
+            </section>
+
+            <!-- Processing Indicator -->
+            <section class="processing-section" id="processingSection" style="display: none;">
+                <div class="processing-indicator">
+                    <div class="pixel-loader"></div>
+                    <p>Converting your image to 8-bit style...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h3>🎉 Conversion Complete!</h3>
+                <div class="comparison-container">
+                    <div class="image-container">
+                        <h4>Original</h4>
+                        <canvas id="originalCanvas" class="preview-canvas"></canvas>
+                    </div>
+                    <div class="image-container">
+                        <h4>8-Bit Version</h4>
+                        <canvas id="resultCanvas" class="preview-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="result-actions">
+                    <button id="downloadButton" class="download-btn">💾 Download 8-Bit Image</button>
+                    <button id="processMoreButton" class="secondary-btn">🔄 Process More Images</button>
+                </div>
+            </section>
+
+            <!-- Batch Processing Section -->
+            <section class="batch-section" id="batchSection" style="display: none;">
+                <h3>📦 Batch Processing</h3>
+                <div class="batch-queue" id="batchQueue"></div>
+                <div class="batch-controls">
+                    <button id="processBatchButton" class="process-btn">🎯 Convert All</button>
+                    <button id="downloadAllButton" class="download-btn" style="display: none;">💾 Download All</button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Made with ❤️ for retro gaming enthusiasts</p>
+            <div class="social-links">
+                <button id="shareButton" class="share-btn">📤 Share Result</button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="imageProcessor.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
