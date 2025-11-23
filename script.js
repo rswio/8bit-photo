@@ -1,15 +1,3 @@
-// Redirect www to non-www
-(function() {
-    if (window.location.hostname.startsWith('www.')) {
-        const newUrl = window.location.protocol + '//' + 
-            window.location.hostname.substring(4) + 
-            window.location.pathname + 
-            window.location.search + 
-            window.location.hash;
-        window.location.replace(newUrl);
-    }
-})();
-
 const imageUpload = document.getElementById('imageUpload');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');

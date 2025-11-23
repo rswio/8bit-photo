@@ -3,6 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <script>
+        if (window.location.hostname === 'www.8bitphoto.co.uk') {
+            window.location.replace('https://8bitphoto.co.uk' + window.location.pathname + window.location.search);
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8-Bit Photo Converter</title>
     <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser.">
