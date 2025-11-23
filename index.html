@@ -1,133 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8-Bit Photo Converter</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser.">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
-        <header class="header">
-            <h1 class="title">🎮 8-Bit Photo Converter</h1>
-            <p class="subtitle">Transform your photos into retro 8-bit masterpieces!</p>
+        <header>
+            <h1>8-BIT PHOTO CONVERTER</h1>
+            <p>Retro-fy your world</p>
         </header>
 
-        <main class="main-content">
-            <!-- Upload Section -->
-            <section class="upload-section">
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-content">
-                        <div class="upload-icon">📁</div>
-                        <h3>Drop your photos here</h3>
-                        <p>or click to browse</p>
-                        <div class="supported-formats">
-                            <small>Supports: JPEG, PNG, WebP</small>
-                        </div>
-                    </div>
-                    <input type="file" id="fileInput" multiple accept="image/jpeg,image/png,image/webp" hidden>
+        <main>
+            <div class="controls-container">
+                <div class="upload-section">
+                    <label for="imageUpload" class="custom-file-upload">
+                        SELECT IMAGE
+                    </label>
+                    <input type="file" id="imageUpload" accept="image/*">
                 </div>
-            </section>
 
-            <!-- Conversion Options -->
-            <section class="options-section" id="optionsSection" style="display: none;">
-                <h3>🎨 Conversion Options</h3>
-                <div class="options-grid">
-                    <div class="option-group">
-                        <label for="colorPalette">Color Palette:</label>
-                        <select id="colorPalette">
+                <div class="settings-section" id="settingsSection" style="display: none;">
+                    <div class="control-group">
+                        <label for="pixelSize">Pixel Size: <span id="pixelSizeValue">10</span></label>
+                        <input type="range" id="pixelSize" min="2" max="50" value="10">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="palette">Palette:</label>
+                        <select id="palette">
+                            <option value="original">Original Colors</option>
                             <option value="gameboy">Game Boy (4 colors)</option>
-                            <option value="nes" selected>NES (64 colors)</option>
-                            <option value="atari">Atari 2600 (128 colors)</option>
-                            <option value="commodore">Commodore 64 (16 colors)</option>
-                            <option value="custom256">Custom (256 colors)</option>
+                            <option value="nes">NES (Limited)</option>
+                            <option value="bw">Black & White</option>
+                            <option value="cga">CGA (Cyan/Magenta)</option>
                         </select>
                     </div>
-                    <div class="option-group">
-                        <label for="ditheringType">Dithering:</label>
-                        <select id="ditheringType">
-                            <option value="none">None</option>
-                            <option value="floyd" selected>Floyd-Steinberg</option>
-                            <option value="ordered">Ordered Dithering</option>
-                            <option value="random">Random</option>
-                        </select>
-                    </div>
-                    <div class="option-group">
-                        <label for="pixelSize">Pixel Size:</label>
-                        <select id="pixelSize">
-                            <option value="1">Original</option>
-                            <option value="2" selected>2x2</option>
-                            <option value="4">4x4</option>
-                            <option value="8">8x8</option>
-                        </select>
-                    </div>
-                    <div class="option-group">
-                        <label for="brightness">Brightness:</label>
-                        <input type="range" id="brightness" min="-50" max="50" value="0" class="slider">
-                        <span id="brightnessValue">0</span>
-                    </div>
-                    <div class="option-group">
-                        <label for="contrast">Contrast:</label>
-                        <input type="range" id="contrast" min="-50" max="50" value="0" class="slider">
-                        <span id="contrastValue">0</span>
-                    </div>
                 </div>
-                <button id="processButton" class="process-btn">🎯 Convert to 8-Bit</button>
-            </section>
+            </div>
 
-            <!-- Processing Indicator -->
-            <section class="processing-section" id="processingSection" style="display: none;">
-                <div class="processing-indicator">
-                    <div class="pixel-loader"></div>
-                    <p>Converting your image to 8-bit style...</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
+            <div class="canvas-container">
+                <div id="placeholder" class="placeholder">
+                    <div class="pixel-icon"></div>
+                    <p>Upload an image to start</p>
                 </div>
-            </section>
+                <canvas id="canvas"></canvas>
+            </div>
 
-            <!-- Results Section -->
-            <section class="results-section" id="resultsSection" style="display: none;">
-                <h3>🎉 Conversion Complete!</h3>
-                <div class="comparison-container">
-                    <div class="image-container">
-                        <h4>Original</h4>
-                        <canvas id="originalCanvas" class="preview-canvas"></canvas>
-                    </div>
-                    <div class="image-container">
-                        <h4>8-Bit Version</h4>
-                        <canvas id="resultCanvas" class="preview-canvas"></canvas>
-                    </div>
-                </div>
-                <div class="result-actions">
-                    <button id="downloadButton" class="download-btn">💾 Download 8-Bit Image</button>
-                    <button id="processMoreButton" class="secondary-btn">🔄 Process More Images</button>
-                </div>
-            </section>
-
-            <!-- Batch Processing Section -->
-            <section class="batch-section" id="batchSection" style="display: none;">
-                <h3>📦 Batch Processing</h3>
-                <div class="batch-queue" id="batchQueue"></div>
-                <div class="batch-controls">
-                    <button id="processBatchButton" class="process-btn">🎯 Convert All</button>
-                    <button id="downloadAllButton" class="download-btn" style="display: none;">💾 Download All</button>
-                </div>
-            </section>
+            <div class="actions" id="actionButtons" style="display: none;">
+                <button id="downloadBtn" class="btn-primary">DOWNLOAD 8-BIT</button>
+            </div>
         </main>
 
-        <footer class="footer">
-            <p>Made with ❤️ for retro gaming enthusiasts</p>
-            <div class="social-links">
-                <button id="shareButton" class="share-btn">📤 Share Result</button>
-            </div>
+        <footer>
+            <p>Made with 👾 by 8BitPhoto</p>
         </footer>
     </div>
-
-    <script src="imageProcessor.js"></script>
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
