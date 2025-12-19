@@ -196,6 +196,22 @@ footer {
     font-size: 0.6rem;
     margin-top: 2rem;
     color: #666;
+    text-align: center;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+footer .github-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+footer .github-link:hover {
+    color: var(--text-color);
+    text-shadow: 2px 2px 0 var(--accent-color);
 }
 
 /* Responsive adjustments */
