@@ -197,10 +197,14 @@ footer {
     margin-top: 2rem;
     color: #666;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 footer p {
-    margin-bottom: 0.5rem;
+    margin: 0;
 }
 
 footer .github-link {
@@ -212,6 +216,24 @@ footer .github-link {
 footer .github-link:hover {
     color: var(--text-color);
     text-shadow: 2px 2px 0 var(--accent-color);
+}
+
+footer .coffee-link {
+    display: inline-block;
+    line-height: 0;
+}
+
+footer .coffee-button {
+    display: block;
+    height: auto;
+    width: 217px;
+    max-width: 100%;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+footer .coffee-button:hover {
+    transform: scale(1.05);
 }
 
 /* Responsive adjustments */
