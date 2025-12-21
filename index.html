@@ -100,21 +100,21 @@
         <main>
             <div class="controls-container">
                 <div class="upload-section">
-                    <label for="imageUpload" class="custom-file-upload" aria-label="Select an image file to convert to 8-bit pixel art">
+                    <label for="imageUpload" class="custom-file-upload">
                         SELECT IMAGE
                     </label>
-                    <input type="file" id="imageUpload" accept="image/*" aria-label="Upload image file">
+                    <input type="file" id="imageUpload" accept="image/*">
                 </div>
 
                 <div class="settings-section" id="settingsSection" style="display: none;">
                     <div class="control-group">
                         <label for="pixelSize">Pixel Size: <span id="pixelSizeValue">10</span></label>
-                        <input type="range" id="pixelSize" min="2" max="50" value="10" aria-label="Adjust pixel size from 2 to 50" aria-valuemin="2" aria-valuemax="50" aria-valuenow="10">
+                        <input type="range" id="pixelSize" min="2" max="50" value="10" aria-valuenow="10">
                     </div>
 
                     <div class="control-group">
                         <label for="palette">Palette:</label>
-                        <select id="palette" aria-label="Select retro color palette for conversion">
+                        <select id="palette">
                             <option value="original">Original Colors</option>
                             <option value="gameboy">Game Boy (4 colors)</option>
                             <option value="nes">NES (Limited)</option>
