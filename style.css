@@ -214,9 +214,9 @@ footer .github-link:hover {
     text-shadow: 2px 2px 0 var(--accent-color);
 }
 
-footer img {
-    height: auto !important;
-    width: 235px !important;
+footer a[href*="buymeacoffee"] img {
+    height: auto;
+    width: 235px;
 }
 
 /* Responsive adjustments */
