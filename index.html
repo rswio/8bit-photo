@@ -18,9 +18,34 @@
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8-Bit Photo Converter</title>
-    <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser.">
+    <title>8-Bit Photo Converter | Free Retro Pixel Art Generator</title>
+    <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private, works on all devices.">
+    <meta name="keywords" content="8-bit photo converter, pixel art generator, retro photo filter, 8bit image converter, pixelate photo, Game Boy filter, NES palette, retro image converter, free photo pixelator, online pixel art">
+    <meta name="author" content="8BitPhoto">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://8bitphoto.co.uk/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://8bitphoto.co.uk/">
+    <meta property="og:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
+    <meta property="og:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.">
+    <meta property="og:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:site_name" content="8-Bit Photo Converter">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://8bitphoto.co.uk/">
+    <meta name="twitter:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
+    <meta name="twitter:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes.">
+    <meta name="twitter:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
+
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="msapplication-TileColor" content="#1a1a2e">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -31,37 +56,69 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "8-Bit Photo Converter",
+        "url": "https://8bitphoto.co.uk/",
+        "description": "Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web Browser, Windows, macOS, Linux, iOS, Android",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "rswio"
+        },
+        "screenshot": "https://8bitphoto.co.uk/android-chrome-512x512.png",
+        "featureList": [
+            "Instant photo to 8-bit conversion",
+            "Multiple retro palettes (Game Boy, NES, CGA, Black & White)",
+            "Adjustable pixel size (2-50 pixels)",
+            "100% browser-based - no server uploads",
+            "Privacy-first design",
+            "One-click download"
+        ],
+        "browserRequirements": "Requires JavaScript. HTML5 Canvas support required."
+    }
+    </script>
 </head>
 
 <body>
     <div class="container">
         <header>
             <h1>8-BIT PHOTO CONVERTER</h1>
-            <p>Retro-fy your world</p>
+            <p>Retro-fy your world - Transform photos into authentic pixel art</p>
         </header>
 
         <main>
             <div class="controls-container">
                 <div class="upload-section">
-                    <label for="imageUpload" class="custom-file-upload">
+                    <label for="imageUpload" class="custom-file-upload" aria-label="Select an image file to convert to 8-bit pixel art">
                         SELECT IMAGE
                     </label>
-                    <input type="file" id="imageUpload" accept="image/*">
+                    <input type="file" id="imageUpload" accept="image/*" aria-label="Upload image file">
                 </div>
 
                 <div class="settings-section" id="settingsSection" style="display: none;">
                     <div class="control-group">
                         <label for="pixelSize">Pixel Size: <span id="pixelSizeValue">10</span></label>
-                        <input type="range" id="pixelSize" min="2" max="50" value="10">
+                        <input type="range" id="pixelSize" min="2" max="50" value="10" aria-label="Adjust pixel size from 2 to 50" aria-valuemin="2" aria-valuemax="50" aria-valuenow="10">
                     </div>
 
                     <div class="control-group">
                         <label for="palette">Palette:</label>
-                        <select id="palette">
+                        <select id="palette" aria-label="Select retro color palette for conversion">
                             <option value="original">Original Colors</option>
                             <option value="gameboy">Game Boy (4 colors)</option>
                             <option value="nes">NES (Limited)</option>
-                            <option value="bw">Black & White</option>
+                            <option value="bw">Black &amp; White</option>
                             <option value="cga">CGA (Cyan/Magenta)</option>
                         </select>
                     </div>
@@ -70,21 +127,21 @@
 
             <div class="canvas-container">
                 <div id="placeholder" class="placeholder">
-                    <div class="pixel-icon"></div>
+                    <div class="pixel-icon" aria-hidden="true"></div>
                     <p>Upload an image to start</p>
                 </div>
-                <canvas id="canvas"></canvas>
+                <canvas id="canvas" aria-label="Converted 8-bit pixel art image"></canvas>
             </div>
 
             <div class="actions" id="actionButtons" style="display: none;">
-                <button id="downloadBtn" class="btn-primary">DOWNLOAD 8-BIT</button>
+                <button id="downloadBtn" type="button" class="btn-primary" aria-label="Download your 8-bit converted image as PNG">DOWNLOAD 8-BIT</button>
             </div>
         </main>
 
         <footer>
-            <p>Made with 👾 by 8BitPhoto</p>
-            <p><a href="https://github.com/rswio/8bit-photo" target="_blank" class="github-link">⭐ View on GitHub</a></p>
-            <div><a href="https://www.buymeacoffee.com/rswio" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: auto !important;width: 235px !important;" ></a></div>
+            <p>Made with <span aria-hidden="true">👾</span> by 8BitPhoto</p>
+            <p><a href="https://github.com/rswio/8bit-photo" target="_blank" rel="noopener noreferrer" class="github-link" aria-label="View 8-Bit Photo Converter source code on GitHub">⭐ View on GitHub</a></p>
+            <div><a href="https://www.buymeacoffee.com/rswio" target="_blank" rel="noopener noreferrer"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee - Support 8-Bit Photo Converter"></a></div>
         </footer>
     </div>
     <script src="script.js"></script>

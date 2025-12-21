@@ -214,6 +214,11 @@ footer .github-link:hover {
     text-shadow: 2px 2px 0 var(--accent-color);
 }
 
+footer img {
+    height: auto !important;
+    width: 235px !important;
+}
+
 /* Responsive adjustments */
 @media (min-width: 600px) {
     .settings-section {
