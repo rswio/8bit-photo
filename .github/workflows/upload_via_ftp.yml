@@ -1,12 +1,8 @@
 name: Deploy via FTP
 
 on:
-  # Runs on pushes targeting the default branch
-  push: 
-    branches: ["main"]
-
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_dispatch: 
 
 # Only need contents read for FTP deployment
 permissions:
@@ -14,24 +10,22 @@ permissions:
 
 # Allow only one concurrent deployment
 concurrency:
-  group: "ftp-deployment"
+  group:  "ftp-deployment"
   cancel-in-progress: false
 
 jobs: 
-  deploy:
+  deploy:  
     runs-on: ubuntu-latest
     steps: 
-      - name:  Checkout
+      - name: Checkout
         uses: actions/checkout@v4
       
-      - name: FTP Deploy Action via lftp
-        uses: pontago/lftp-deploy-action@v1.0.1
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          host:  ${{ secrets.FTP_HOST }}
+          server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASS }}
-          port:  21
+          password:  ${{ secrets.FTP_PASS }}
+          port: 21
           protocol: ftp
-          verify_cert: false
-          remote_dir: /
-          max_retries: 1
+          server-dir: /
