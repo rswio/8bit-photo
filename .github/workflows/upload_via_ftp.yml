@@ -1,77 +1,37 @@
-# Simple workflow for deploying static content to GitHub Pages
 name: Deploy via FTP
 
 on:
   # Runs on pushes targeting the default branch
-  push:
+  push: 
     branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Only need contents read for FTP deployment
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment
 concurrency:
-  group: "pages"
+  group: "ftp-deployment"
   cancel-in-progress: false
 
-jobs:
-  # Single deploy job since we're just deploying
+jobs: 
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
+    steps: 
+      - name:  Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: FTP Deploy Action via lftp (FTP, SFTP, FTPS)
-        # You may pin to the exact commit or the version.
-        # uses: pontago/lftp-deploy-action@47debd112419af76b6b7c0ee7861dc506a26f01b
+      
+      - name: FTP Deploy Action via lftp
         uses: pontago/lftp-deploy-action@v1.0.1
         with:
-        # Sever Hostname or IP
-          host: ${{ secrets.FTP_HOST }}
-          # Login Username
+          host:  ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
-          # Login Password
           password: ${{ secrets.FTP_PASS }}
-          # Default port are FTP(21), SFTP(22).
-          port: 21
-          # Transfer protocol (ftp, ftps, sftp)
+          port:  21
           protocol: ftp
-          # If you want to no SSL verification, false. (FTPS)
           verify_cert: false
-          # Upload source directory.
-          #local_dir: # optional, default is 
-          # Upload remote directory.
           remote_dir: /
-          # If doesn't exists, create remote directory.
-          #create_remote_dir: # optional, default is true
-          # Support lftp commands. If you input local_dir and remote_dir, the script will be executed after mirror command.
-          #script: # optional, default is 
-          # You can check the operation. Not upload and create remote directory.
-          #dry_run: # optional
-          # Debug mode. Output lftp log and upload verbose.
-          #debug: # optional
-          # Timeout in seconds.
-          #timeout: # optional, default is 30
-          # Max retries. 0 is unlimited. 1 means no retries.
           max_retries: 1
