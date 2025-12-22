@@ -20,6 +20,7 @@ downloadBtn.addEventListener('click', downloadImage);
 
 function updatePixelSizeDisplay() {
     pixelSizeValue.textContent = pixelSizeInput.value;
+    pixelSizeInput.setAttribute('aria-valuenow', pixelSizeInput.value);
 }
 
 function handleImageUpload(e) {
