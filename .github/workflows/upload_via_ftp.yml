@@ -29,3 +29,8 @@ jobs:
           port: 21
           protocol: ftp
           server-dir: /
+          exclude: |
+            **/. git*
+            **/.git*/**
+            **/node_modules/**
+            README.md
