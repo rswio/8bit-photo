@@ -45,13 +45,6 @@ Visit **[8bitphoto. co.uk](https://8bitphoto.co.uk/)** to try it out!
 2. **Customize**:  Adjust the pixel size and choose your favorite retro palette
 3. **Download**: Click "DOWNLOAD 8-BIT" to save your creation
 
-## 💻 Local Development
-
-1. Clone this repository
-2. Open `index.html` in your browser
-
-That's it! No build process or dependencies required. 
-
 ## 🎨 Palette Options
 
 - **Original Colors**:  Maintains the original photo colors with reduced palette
