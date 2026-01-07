@@ -24,11 +24,12 @@ Visit **[8bitphoto. co.uk](https://8bitphoto.co.uk/)** to try it out!
 
 ## 🛠️ Technologies
 
-- **HTML5 Canvas**: For image processing and rendering
-- **Vanilla JavaScript**: Lightweight and fast
-- **CSS3**: Retro-styled interface with custom styling
-- **Google Fonts**: Press Start 2P for that authentic retro feel
-- **100% Vibe Coded**: Built with pure creativity and retro energy 👾
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+- 100% Vibe Coded: Built with pure creativity and retro energy
 
 ## 📦 Project Structure
 
