@@ -1,37 +1,35 @@
-name: Deploy via FTP
+name: Build and Deploy via FTP
 
 on:
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch: 
+  workflow_dispatch:
 
-# Only need contents read for FTP deployment
-permissions:
-  contents: read
-
-# Allow only one concurrent deployment
-concurrency:
-  group:  "ftp-deployment"
-  cancel-in-progress: false
-
-jobs: 
-  deploy:  
+jobs:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout
+    
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: FTP Deploy
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
-          password:  ${{ secrets.FTP_PASS }}
+          password: ${{ secrets.FTP_PASS }}
           port: 21
           protocol: ftp
+          local-dir: ./dist/
           server-dir: /
-          exclude: |
-            **/. git*
-            **/.git*/**
-            **/node_modules/**
-            README.md
-            .gitignore
