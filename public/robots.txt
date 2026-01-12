@@ -1,14 +1,9 @@
-User-agent: Googlebot
-Allow: /
+# robots.txt for 8bitphoto.co.uk
+# All search engine bots are welcome to crawl our site
 
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
+# Allow all bots to access all content
 User-agent: *
 Allow: /
+
+# Sitemap location
+Sitemap: https://8bitphoto.co.uk/sitemap.xml
