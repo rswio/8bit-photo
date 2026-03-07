@@ -1,4 +1,4 @@
-name: Build and Deploy to AWS S3
+  name: Build and Deploy to AWS S3
 
 on:
   workflow_dispatch:
@@ -11,27 +11,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-<<<<<<< HEAD
+- name: Setup Node.js
+  uses: actions/setup-node@v4
+  with:
+    node-version: '20'
+    cache: 'npm'
 
-      - name: Generate Tailwind CSS
-        run: |
-          npm install tailwindcss
-          npx tailwindcss -i input.css -o tailwind.css --minify
+- name: Install dependencies
+  run: npm ci
 
-=======
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
-         
->>>>>>> parent of 0c1a57a (refactor: remove unused hooks, styles, and components; clean up project structure)
+- name: Build project
+  run: npm run build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -39,19 +29,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
 
-      - name: Deploy static site to S3 bucket
-<<<<<<< HEAD
-        run: |
-          aws s3 sync ./ s3://${{ secrets.AWS_S3_BUCKET }} \
-            --delete \
-            --exclude ".git/*" \
-            --exclude ".github/*" \
-            --exclude "README.md" \
-            --exclude "tailwind.config.js" \
-            --exclude "input.css" \
-            --exclude "package.json" \
-            --exclude "package-lock.json" \
-            --exclude "node_modules/*"
-=======
-        run: aws s3 sync ./dist/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
->>>>>>> parent of 0c1a57a (refactor: remove unused hooks, styles, and components; clean up project structure)
+- name: Deploy static site to S3 bucket
+  run: aws s3 sync ./dist/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
