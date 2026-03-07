@@ -1,53 +1,705 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXV5LW6H1S"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXV5LW6H1S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YXV5LW6H1S');
+  </script>
 
-      gtag('config', 'G-YXV5LW6H1S');
-    </script>
-    <script>
-        if (window.location.hostname === 'www.8bitphoto.co.uk') {
-            window.location.replace('https://8bitphoto.co.uk' + window.location.pathname + window.location.search);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8-Bit Photo Converter | Free Retro Pixel Art Generator</title>
+  <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private, works on all devices.">
+  <meta name="keywords" content="8-bit photo converter, pixel art generator, retro photo filter, 8bit image converter, pixelate photo, Game Boy filter, NES palette, retro image converter, free photo pixelator, online pixel art">
+  <meta name="author" content="8BitPhoto">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://8bitphoto.co.uk/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://8bitphoto.co.uk/">
+  <meta property="og:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
+  <meta property="og:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.">
+  <meta property="og:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:site_name" content="8-Bit Photo Converter">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://8bitphoto.co.uk/">
+  <meta name="twitter:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
+  <meta name="twitter:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes.">
+  <meta name="twitter:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        container: { center: true, padding: '2rem', screens: { '2xl': '1400px' } },
+        extend: {
+          fontFamily: { sans: ['"Press Start 2P"', 'monospace'] },
+          colors: {
+            background: '#0f111a',
+            card:       '#141726',
+            foreground: '#f2f2ee',
+            primary:   { DEFAULT: '#ff4da6', foreground: '#0f111a' },
+            secondary: { DEFAULT: '#00eaff', foreground: '#0f111a' },
+            accent:    { DEFAULT: '#ffff33', foreground: '#0f111a' },
+            muted:     { DEFAULT: '#1e2236', foreground: '#6b7299' },
+            border:    '#2d3454',
+            'neon-pink':   '#ff4da6',
+            'neon-cyan':   '#00eaff',
+            'neon-yellow': '#ffff33',
+            'neon-green':  '#00e619',
+            'arcade-dark': '#0f111a',
+          },
+          borderRadius: { lg: '0px', md: '0px', sm: '0px', DEFAULT: '0px' },
+          keyframes: {
+            'pixel-fade-in': { '0%': { opacity: '0', transform: 'scale(0.9)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+            blink:       { '0%,50%': { opacity: '1' }, '51%,100%': { opacity: '0' } },
+            'pulse-glow':{ '0%,100%': { opacity: '1', filter: 'brightness(1)' }, '50%': { opacity: '0.85', filter: 'brightness(1.1)' } },
+          },
+          animation: {
+            'pixel-fade-in': 'pixel-fade-in 0.3s ease-out',
+            blink:           'blink 1s step-end infinite',
+            'pulse-glow':    'pulse-glow 2s ease-in-out infinite',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      * { border-color: #2d3454; }
+      body { font-family: 'Press Start 2P', monospace; }
+    }
+    @layer utilities {
+      .text-glow-pink  { text-shadow: 0 0 10px rgba(255,77,166,.8), 0 0 30px rgba(255,77,166,.5); }
+      .text-glow-cyan  { text-shadow: 0 0 10px rgba(0,234,255,.8),  0 0 30px rgba(0,234,255,.5); }
+      .box-glow-pink   { box-shadow: 0 0 15px rgba(255,77,166,.5), 0 0 30px rgba(255,77,166,.2), inset 0 0 15px rgba(255,77,166,.1); }
+      .scanlines { position: relative; }
+      .scanlines::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(10,11,18,.3) 2px, rgba(10,11,18,.3) 4px);
+        pointer-events: none;
+        z-index: 1;
+      }
+    }
+  </style>
+
+  <style>
+    /* ── Range input ─────────────────────────────────── */
+    input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; width: 100%; }
+    input[type=range]::-webkit-slider-runnable-track { background: #2d3454; height: 4px; }
+    input[type=range]::-webkit-slider-thumb  { -webkit-appearance: none; background: #ff4da6; width: 16px; height: 16px; margin-top: -6px; border: 2px solid #0f111a; }
+    input[type=range]::-moz-range-track { background: #2d3454; height: 4px; }
+    input[type=range]::-moz-range-thumb { background: #ff4da6; width: 12px; height: 12px; border: 2px solid #0f111a; border-radius: 0; }
+
+    /* ── Select ──────────────────────────────────────── */
+    select {
+      background: #1e2236;
+      border: 2px solid rgba(255,77,166,.5);
+      color: #f2f2ee;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      padding: 12px 40px 12px 16px;
+      width: 100%;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff4da6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+    select option { background: #141726; color: #f2f2ee; }
+    select:focus { outline: none; border-color: #ff4da6; }
+
+    /* ── Canvas ──────────────────────────────────────── */
+    canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
+
+    /* ── Toast ───────────────────────────────────────── */
+    #toastContainer {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 9999; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .toast {
+      padding: 8px 20px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      animation: pixel-fade-in .3s ease-out;
+      white-space: nowrap;
+    }
+
+    /* ── Upload label hover ──────────────────────────── */
+    #uploadLabel:hover { background: #ff4da6; color: #0f111a; }
+
+    /* ── Action button hover ─────────────────────────── */
+    #btnDownload:hover { background: transparent !important; color: #00e619 !important; }
+    #btnClear:hover    { background: #ef4444 !important;     color: #f2f2ee !important; }
+  </style>
+</head>
+
+<body class="bg-background text-foreground min-h-screen flex flex-col">
+
+  <!-- Top gradient bar -->
+  <div style="height:8px;background:linear-gradient(to right,#ff4da6,#00eaff,#ffff33)"></div>
+
+  <main class="flex-1 container mx-auto px-4 py-8 md:py-12">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="text-center mb-10 md:mb-14">
+      <h1 class="text-xl md:text-3xl lg:text-4xl text-primary text-glow-pink mb-4 tracking-wider">8-BIT PHOTO</h1>
+      <h2 class="text-lg md:text-xl lg:text-2xl text-secondary text-glow-cyan mb-6">CONVERTER</h2>
+      <p class="text-[10px] md:text-xs text-muted-foreground max-w-lg mx-auto leading-relaxed">
+        TRANSFORM YOUR PHOTOS INTO AUTHENTIC RETRO PIXEL ART
+      </p>
+    </header>
+
+    <!-- ── Converter ───────────────────────────────────────── -->
+    <section class="w-full max-w-4xl mx-auto space-y-6">
+
+      <!-- Upload button -->
+      <div class="flex justify-center">
+        <label for="fileInput" style="cursor:pointer">
+          <div id="uploadLabel" class="flex items-center gap-3 px-8 py-4 bg-card border-4 border-primary text-primary transition-all box-glow-pink" style="cursor:pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span class="text-xs">SELECT IMAGE</span>
+          </div>
+        </label>
+        <input type="file" id="fileInput" accept="image/*" class="hidden">
+      </div>
+
+      <!-- Settings panel (hidden until image loaded) -->
+      <div id="settingsPanel" class="hidden space-y-6 p-6 bg-card border-4 border-secondary animate-pixel-fade-in">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-secondary text-glow-cyan">PIXEL SIZE</span>
+            <span class="text-xs text-primary text-glow-pink" id="pixelSizeLabel">10px</span>
+          </div>
+          <input type="range" id="pixelSizeSlider" min="2" max="40" step="1" value="10">
+        </div>
+        <div class="space-y-3">
+          <span class="text-xs text-secondary text-glow-cyan block mb-3">COLOUR PALETTE</span>
+          <select id="paletteSelect">
+            <option value="original">ORIGINAL COLOURS</option>
+            <option value="gameboy">GAME BOY</option>
+            <option value="nes">NES PALETTE</option>
+            <option value="bw">BLACK &amp; WHITE</option>
+            <option value="cga">CGA (CYAN/MAGENTA)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Canvas area -->
+      <div
+        id="canvasArea"
+        class="relative w-full bg-arcade-dark border-4 overflow-hidden scanlines"
+        style="aspect-ratio:16/9; border-color:rgba(242,242,238,.3);"
+        ondragover="handleDragOver(event)"
+        ondrop="handleDrop(event)"
+      >
+        <!-- Empty state -->
+        <div id="emptyState" class="absolute inset-0 flex flex-col items-center justify-center gap-4 text-muted-foreground">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" style="opacity:.5">
+            <rect x="3" y="3" width="18" height="18"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <p class="text-xs animate-pulse-glow">UPLOAD AN IMAGE TO START</p>
+          <p class="text-[10px]" style="opacity:.5">OR DRAG &amp; DROP HERE</p>
+          <p class="text-[10px]" style="opacity:.35">OR PASTE FROM CLIPBOARD</p>
+        </div>
+
+        <!-- Canvas (hidden until image loaded) -->
+        <div id="canvasWrapper" class="hidden w-full h-full flex items-center justify-center p-4">
+          <canvas id="pixelCanvas" class="max-w-full max-h-full object-contain"></canvas>
+        </div>
+
+        <!-- Processing overlay -->
+        <div id="processingOverlay" class="hidden absolute inset-0 flex items-center justify-center" style="background:rgba(15,17,26,.8);z-index:10">
+          <span class="text-xs text-primary animate-blink">PROCESSING...</span>
+        </div>
+      </div>
+
+      <!-- Action buttons (hidden until image loaded) -->
+      <div id="actionButtons" class="justify-center gap-4 animate-pixel-fade-in" style="display:none">
+        <button id="btnDownload" onclick="downloadImage()" class="px-8 py-6 text-xs border-4 transition-colors" style="background:#00e619;color:#0f111a;border-color:#00e619">
+          <span style="display:inline-flex;align-items:center;gap:8px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            DOWNLOAD 8-BIT
+          </span>
+        </button>
+        <button id="btnClear" onclick="clearImage()" class="px-8 py-6 text-xs border-4 transition-colors" style="background:transparent;color:#ef4444;border-color:#ef4444">
+          <span style="display:inline-flex;align-items:center;gap:8px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14H6L5 6"/>
+              <path d="M10 11v6"/><path d="M14 11v6"/>
+              <path d="M9 6V4h6v2"/>
+            </svg>
+            CLEAR
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ── Feature cards ────────────────────────────────────── -->
+    <section class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 bg-card border-2 text-center" style="border-color:rgba(255,77,166,.3)">
+        <div class="text-2xl mb-3">🎮</div>
+        <h3 class="text-xs text-primary mb-2">RETRO PALETTES</h3>
+        <p class="text-[10px] text-muted-foreground leading-relaxed">GAME BOY, NES, CGA AND MORE CLASSIC PALETTES</p>
+      </div>
+      <div class="p-6 bg-card border-2 text-center" style="border-color:rgba(0,234,255,.3)">
+        <div class="text-2xl mb-3">🔒</div>
+        <h3 class="text-xs text-secondary mb-2">100% PRIVATE</h3>
+        <p class="text-[10px] text-muted-foreground leading-relaxed">ALL PROCESSING HAPPENS IN YOUR BROWSER</p>
+      </div>
+      <div class="p-6 bg-card border-2 text-center" style="border-color:rgba(255,255,51,.3)">
+        <div class="text-2xl mb-3">⚡</div>
+        <h3 class="text-xs text-accent mb-2">INSTANT RESULTS</h3>
+        <p class="text-[10px] text-muted-foreground leading-relaxed">REAL-TIME PREVIEW AS YOU ADJUST SETTINGS</p>
+      </div>
+    </section>
+
+    <!-- ── Section divider ──────────────────────────────────── -->
+    <div class="mt-16 flex items-center gap-4 max-w-3xl mx-auto">
+      <div class="flex-1" style="height:1px;background:linear-gradient(to right,transparent,rgba(255,77,166,.4),transparent)"></div>
+      <span class="text-[10px]" style="color:rgba(255,77,166,.6);letter-spacing:.1em">◆ INFO ◆</span>
+      <div class="flex-1" style="height:1px;background:linear-gradient(to right,transparent,rgba(255,77,166,.4),transparent)"></div>
+    </div>
+
+    <!-- ── SEO content ───────────────────────────────────────── -->
+    <section class="mt-8 max-w-3xl mx-auto space-y-6">
+
+      <!-- What is 8-bit pixel art -->
+      <article class="bg-card border-2 p-6 md:p-8 relative" style="border-color:rgba(255,77,166,.4)">
+        <div class="absolute top-0 left-0 w-2 h-2"  style="background:#ff4da6"></div>
+        <div class="absolute top-0 right-0 w-2 h-2" style="background:#ff4da6"></div>
+        <div class="absolute bottom-0 left-0 w-2 h-2"  style="background:#ff4da6"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2" style="background:#ff4da6"></div>
+        <h2 class="text-xs md:text-sm text-primary text-glow-pink mb-5 flex items-center gap-3">
+          <span style="color:rgba(255,77,166,.6)">▶</span>
+          WHAT IS 8-BIT PIXEL ART?
+        </h2>
+        <p class="text-[10px] md:text-xs text-muted-foreground leading-relaxed">
+          8-bit pixel art refers to the iconic visual style from classic video game consoles like the Nintendo Entertainment System (NES), Game Boy, and early PC graphics. This distinctive aesthetic features limited colour palettes, blocky pixels, and nostalgic charm that defined an entire generation of gaming.
+        </p>
+      </article>
+
+      <!-- How it works -->
+      <article class="bg-card border-2 p-6 md:p-8 relative" style="border-color:rgba(0,234,255,.4)">
+        <div class="absolute top-0 left-0 w-2 h-2"  style="background:#00eaff"></div>
+        <div class="absolute top-0 right-0 w-2 h-2" style="background:#00eaff"></div>
+        <div class="absolute bottom-0 left-0 w-2 h-2"  style="background:#00eaff"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2" style="background:#00eaff"></div>
+        <h2 class="text-xs md:text-sm text-secondary text-glow-cyan mb-5 flex items-center gap-3">
+          <span style="color:rgba(0,234,255,.6)">▶</span>
+          HOW DOES THE CONVERTER WORK?
+        </h2>
+        <div class="space-y-3 mb-5">
+          <div class="flex items-start gap-4">
+            <span class="text-[10px] shrink-0 mt-0.5" style="color:rgba(0,234,255,.5)">01</span>
+            <div class="flex-1 hidden sm:block" style="height:1px;background:rgba(0,234,255,.15);margin-top:7px"></div>
+            <p class="text-[10px] md:text-xs text-muted-foreground leading-relaxed sm:text-right">Upload any photo or drag it onto the canvas</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="text-[10px] shrink-0 mt-0.5" style="color:rgba(0,234,255,.5)">02</span>
+            <div class="flex-1 hidden sm:block" style="height:1px;background:rgba(0,234,255,.15);margin-top:7px"></div>
+            <p class="text-[10px] md:text-xs text-muted-foreground leading-relaxed sm:text-right">Choose a pixel size — larger values mean chunkier pixels</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="text-[10px] shrink-0 mt-0.5" style="color:rgba(0,234,255,.5)">03</span>
+            <div class="flex-1 hidden sm:block" style="height:1px;background:rgba(0,234,255,.15);margin-top:7px"></div>
+            <p class="text-[10px] md:text-xs text-muted-foreground leading-relaxed sm:text-right">Pick a classic colour palette to match your era</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="text-[10px] shrink-0 mt-0.5" style="color:rgba(0,234,255,.5)">04</span>
+            <div class="flex-1 hidden sm:block" style="height:1px;background:rgba(0,234,255,.15);margin-top:7px"></div>
+            <p class="text-[10px] md:text-xs text-muted-foreground leading-relaxed sm:text-right">Download your pixel art as a PNG, ready to share</p>
+          </div>
+        </div>
+        <p class="text-[10px] leading-relaxed pt-4" style="border-top:1px solid rgba(45,52,84,.5);color:rgba(107,114,153,.6)">
+          The entire process happens in your browser — nothing is uploaded to any server.
+        </p>
+      </article>
+
+      <!-- Available palettes -->
+      <article class="bg-card border-2 p-6 md:p-8 relative" style="border-color:rgba(255,255,51,.4)">
+        <div class="absolute top-0 left-0 w-2 h-2"  style="background:#ffff33"></div>
+        <div class="absolute top-0 right-0 w-2 h-2" style="background:#ffff33"></div>
+        <div class="absolute bottom-0 left-0 w-2 h-2"  style="background:#ffff33"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2" style="background:#ffff33"></div>
+        <h2 class="text-xs md:text-sm text-accent mb-5 flex items-center gap-3">
+          <span style="color:rgba(255,255,51,.6)">▶</span>
+          AVAILABLE COLOUR PALETTES
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[10px] text-muted-foreground">
+
+          <!-- Game Boy -->
+          <div class="p-4 space-y-3" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[10px]" style="color:#ff4da6">GAME BOY</h3>
+              <div style="display:flex;gap:4px">
+                <div style="width:16px;height:16px;background:#0f380f;border:1px solid rgba(45,52,84,.4)"></div>
+                <div style="width:16px;height:16px;background:#306230;border:1px solid rgba(45,52,84,.4)"></div>
+                <div style="width:16px;height:16px;background:#8bac0f;border:1px solid rgba(45,52,84,.4)"></div>
+                <div style="width:16px;height:16px;background:#9bbc0f;border:1px solid rgba(45,52,84,.4)"></div>
+              </div>
+            </div>
+            <p class="leading-relaxed">The classic 4-shade green palette from Nintendo's legendary handheld console, perfect for that authentic 1989 portable gaming look.</p>
+          </div>
+
+          <!-- NES -->
+          <div class="p-4 space-y-3" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[10px]" style="color:#00eaff">NES</h3>
+              <div style="display:flex;flex-wrap:wrap;max-width:80px;gap:1px">
+                <div style="width:10px;height:10px;background:#7c7c7c"></div>
+                <div style="width:10px;height:10px;background:#0000fc"></div>
+                <div style="width:10px;height:10px;background:#0000bc"></div>
+                <div style="width:10px;height:10px;background:#4428bc"></div>
+                <div style="width:10px;height:10px;background:#940084"></div>
+                <div style="width:10px;height:10px;background:#a80020"></div>
+                <div style="width:10px;height:10px;background:#a81000"></div>
+                <div style="width:10px;height:10px;background:#881400"></div>
+                <div style="width:10px;height:10px;background:#503000"></div>
+                <div style="width:10px;height:10px;background:#007800"></div>
+                <div style="width:10px;height:10px;background:#006800"></div>
+                <div style="width:10px;height:10px;background:#005800"></div>
+                <div style="width:10px;height:10px;background:#004058"></div>
+                <div style="width:10px;height:10px;background:#000000"></div>
+                <div style="width:10px;height:10px;background:#bcbcbc"></div>
+                <div style="width:10px;height:10px;background:#0078f8"></div>
+                <div style="width:10px;height:10px;background:#0058f8"></div>
+                <div style="width:10px;height:10px;background:#6844fc"></div>
+                <div style="width:10px;height:10px;background:#d800cc"></div>
+                <div style="width:10px;height:10px;background:#e40058"></div>
+                <div style="width:10px;height:10px;background:#f83800"></div>
+                <div style="width:10px;height:10px;background:#e45c10"></div>
+                <div style="width:10px;height:10px;background:#ac7c00"></div>
+                <div style="width:10px;height:10px;background:#00b800"></div>
+              </div>
+            </div>
+            <p class="leading-relaxed">The full 54-colour palette from the Nintendo Entertainment System, bringing back memories of Super Mario Bros and The Legend of Zelda.</p>
+          </div>
+
+          <!-- CGA -->
+          <div class="p-4 space-y-3" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[10px]" style="color:#ffff33">CGA</h3>
+              <div style="display:flex;gap:4px">
+                <div style="width:16px;height:16px;background:#000000;border:1px solid rgba(45,52,84,.4)"></div>
+                <div style="width:16px;height:16px;background:#55ffff;border:1px solid rgba(45,52,84,.4)"></div>
+                <div style="width:16px;height:16px;background:#ff55ff;border:1px solid rgba(45,52,84,.4)"></div>
+                <div style="width:16px;height:16px;background:#ffffff;border:1px solid rgba(45,52,84,.4)"></div>
+              </div>
+            </div>
+            <p class="leading-relaxed">The iconic 4-colour palette from IBM's Color Graphics Adapter, featuring the memorable cyan, magenta, and white combination from early PC gaming.</p>
+          </div>
+
+          <!-- Original -->
+          <div class="p-4 space-y-3" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[10px] text-foreground">ORIGINAL</h3>
+              <div style="display:flex;gap:1px">
+                <div style="width:10px;height:16px;background:#ff6b6b"></div>
+                <div style="width:10px;height:16px;background:#ffd93d"></div>
+                <div style="width:10px;height:16px;background:#6bcb77"></div>
+                <div style="width:10px;height:16px;background:#4d96ff"></div>
+                <div style="width:10px;height:16px;background:#c77dff"></div>
+                <div style="width:10px;height:16px;background:#ff9a3c"></div>
+              </div>
+            </div>
+            <p class="leading-relaxed">Keep your image's original colours while applying the pixelation effect — a modern take on retro aesthetics.</p>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Perfect for creators -->
+      <article class="bg-card border-2 p-6 md:p-8 relative overflow-hidden" style="border-color:rgba(255,77,166,.4)">
+        <div class="absolute top-0 left-0 w-2 h-2"  style="background:#ff4da6"></div>
+        <div class="absolute top-0 right-0 w-2 h-2" style="background:#ff4da6"></div>
+        <div class="absolute bottom-0 left-0 w-2 h-2"  style="background:#ff4da6"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2" style="background:#ff4da6"></div>
+        <div class="absolute right-4 bottom-4 select-none" style="font-size:4rem;opacity:.05">🎮</div>
+        <h2 class="text-xs md:text-sm text-primary text-glow-pink mb-5 flex items-center gap-3">
+          <span style="color:rgba(255,77,166,.6)">▶</span>
+          PERFECT FOR CREATORS
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+          <div class="p-3 text-center space-y-2" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="text-xl">👤</div><p class="text-[8px] text-muted-foreground">PROFILE PICS</p>
+          </div>
+          <div class="p-3 text-center space-y-2" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="text-xl">🎮</div><p class="text-[8px] text-muted-foreground">GAME ASSETS</p>
+          </div>
+          <div class="p-3 text-center space-y-2" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="text-xl">📱</div><p class="text-[8px] text-muted-foreground">SOCIAL MEDIA</p>
+          </div>
+          <div class="p-3 text-center space-y-2" style="background:rgba(15,17,26,.5);border:1px solid rgba(45,52,84,.4)">
+            <div class="text-xl">🖼️</div><p class="text-[8px] text-muted-foreground">PIXEL ART</p>
+          </div>
+        </div>
+        <p class="text-[10px] md:text-xs text-muted-foreground leading-relaxed">
+          Whether you're creating retro-style profile pictures, designing indie game assets, making nostalgic social media content, or just having fun with pixel art — download your creations as high-quality PNG files, ready to share anywhere.
+        </p>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────────── -->
+  <footer class="py-6 text-center space-y-4" style="border-top:1px solid rgba(45,52,84,.3)">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href="https://github.com/rswio/8bit-photo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-xs text-primary transition-colors"
+        style="text-decoration:none"
+        onmouseover="this.style.color='rgba(255,77,166,.8)'"
+        onmouseout="this.style.color='#ff4da6'"
+        aria-label="View 8-Bit Photo Converter source code on GitHub"
+      >VIEW ON GITHUB</a>
+    </div>
+    <div class="flex items-center justify-center">
+      <a href="https://www.buymeacoffee.com/rswio" target="_blank" rel="noopener noreferrer">
+        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee - Support 8-Bit Photo Converter" loading="lazy" style="height:80px">
+      </a>
+    </div>
+    <p class="text-[10px] text-muted-foreground">MADE FOR PIXEL ART LOVERS</p>
+  </footer>
+
+  <!-- Bottom gradient bar -->
+  <div style="height:8px;background:linear-gradient(to right,#ffff33,#00eaff,#ff4da6)"></div>
+
+  <!-- Toast container -->
+  <div id="toastContainer"></div>
+
+  <!-- ── JavaScript ─────────────────────────────────────────── -->
+  <script>
+    // ── State ────────────────────────────────────────────────
+    let originalImage = null;
+    let pixelSize      = 10;
+    let palette        = 'original';
+    let originalName   = '8bit-photo';
+
+    // ── Palette data (ported from usePixelConverter.ts) ──────
+    const PALETTES = {
+      gameboy: [[15,56,15],[48,98,48],[139,172,15],[155,188,15]],
+      nes: [
+        [124,124,124],[0,0,252],[0,0,188],[68,40,188],[148,0,132],[168,0,32],[168,16,0],[136,20,0],
+        [80,48,0],[0,120,0],[0,104,0],[0,88,0],[0,64,88],[0,0,0],
+        [188,188,188],[0,120,248],[0,88,248],[104,68,252],[216,0,204],[228,0,88],[248,56,0],[228,92,16],
+        [172,124,0],[0,184,0],[0,168,0],[0,168,68],[0,136,136],
+        [248,248,248],[60,188,252],[104,136,252],[152,120,248],[248,120,248],[248,88,152],[248,120,88],[252,160,68],
+        [248,184,0],[184,248,24],[88,216,84],[88,248,152],[0,232,216],[120,120,120],
+      ],
+      cga: [[0,0,0],[85,255,255],[255,85,255],[255,255,255]],
+    };
+
+    function findNearestColor(r, g, b, pal) {
+      let minDist = Infinity, nearest = pal[0];
+      for (const c of pal) {
+        const d = (r-c[0])**2 + (g-c[1])**2 + (b-c[2])**2;
+        if (d < minDist) { minDist = d; nearest = c; }
+      }
+      return nearest;
+    }
+
+    function applyPaletteToPixel(r, g, b, pal) {
+      if (pal === 'bw') {
+        const v = (r+g+b)/3 > 128 ? 255 : 0;
+        return [v, v, v];
+      }
+      if (pal === 'gameboy') {
+        const avg = (r+g+b)/3;
+        if (avg < 64)  return [15,56,15];
+        if (avg < 128) return [48,98,48];
+        if (avg < 192) return [139,172,15];
+        return [155,188,15];
+      }
+      if (pal === 'cga' || pal === 'nes') {
+        return findNearestColor(r, g, b, PALETTES[pal]);
+      }
+      return [r, g, b];
+    }
+
+    // ── Image processing ─────────────────────────────────────
+    function processImage() {
+      if (!originalImage) return;
+      showProcessing(true);
+      // yield to browser so the overlay renders before we block
+      setTimeout(() => {
+        const canvas = document.getElementById('pixelCanvas');
+        const ctx    = canvas.getContext('2d');
+        const w = originalImage.width;
+        const h = originalImage.height;
+        canvas.width  = w;
+        canvas.height = h;
+
+        const smallW = Math.ceil(w / pixelSize);
+        const smallH = Math.ceil(h / pixelSize);
+
+        const off    = document.createElement('canvas');
+        off.width    = smallW;
+        off.height   = smallH;
+        const offCtx = off.getContext('2d');
+        offCtx.drawImage(originalImage, 0, 0, smallW, smallH);
+
+        if (palette !== 'original') {
+          const imgData = offCtx.getImageData(0, 0, smallW, smallH);
+          const data    = imgData.data;
+          for (let i = 0; i < data.length; i += 4) {
+            const [nr, ng, nb] = applyPaletteToPixel(data[i], data[i+1], data[i+2], palette);
+            data[i] = nr; data[i+1] = ng; data[i+2] = nb;
+          }
+          offCtx.putImageData(imgData, 0, 0);
         }
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8-Bit Photo Converter | Free Retro Pixel Art Generator</title>
-    <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private, works on all devices.">
-    <meta name="keywords" content="8-bit photo converter, pixel art generator, retro photo filter, 8bit image converter, pixelate photo, Game Boy filter, NES palette, retro image converter, free photo pixelator, online pixel art">
-    <meta name="author" content="8BitPhoto">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://8bitphoto.co.uk/">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://8bitphoto.co.uk/">
-    <meta property="og:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
-    <meta property="og:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.">
-    <meta property="og:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
-    <meta property="og:site_name" content="8-Bit Photo Converter">
-    <meta property="og:locale" content="en_US">
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(off, 0, 0, smallW, smallH, 0, 0, w, h);
+        showProcessing(false);
+      }, 0);
+    }
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://8bitphoto.co.uk/">
-    <meta name="twitter:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
-    <meta name="twitter:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes.">
-    <meta name="twitter:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
+    // ── File loading ─────────────────────────────────────────
+    function loadFile(file) {
+      if (!file || !file.type.startsWith('image/')) {
+        showToast('PLEASE SELECT AN IMAGE FILE', 'error');
+        return;
+      }
+      originalName = (file.name.replace(/\.[^.]+$/, '') || '8bit-photo');
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          originalImage = img;
+          showImageUI();
+          processImage();
+          showToast('IMAGE LOADED!');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
 
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  </head>
+    function handleFileSelect(e) { loadFile(e.target.files?.[0]); }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    function handleDrop(e) {
+      e.preventDefault();
+      loadFile(e.dataTransfer.files?.[0]);
+    }
+
+    function handleDragOver(e) { e.preventDefault(); }
+
+    // Clipboard paste
+    document.addEventListener('paste', (e) => {
+      const item = Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'));
+      if (item) loadFile(item.getAsFile());
+    });
+
+    // ── UI state ─────────────────────────────────────────────
+    function showImageUI() {
+      document.getElementById('emptyState').classList.add('hidden');
+      document.getElementById('canvasWrapper').classList.remove('hidden');
+      document.getElementById('settingsPanel').classList.remove('hidden');
+      document.getElementById('actionButtons').style.display = 'flex';
+    }
+
+    function showProcessing(show) {
+      document.getElementById('processingOverlay').classList.toggle('hidden', !show);
+    }
+
+    // ── Download ─────────────────────────────────────────────
+    function downloadImage() {
+      const canvas = document.getElementById('pixelCanvas');
+      if (!canvas || !originalImage) return;
+      const link    = document.createElement('a');
+      link.download = originalName + '-8bit.png';
+      link.href     = canvas.toDataURL();
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('8-BIT IMAGE DOWNLOADED!');
+    }
+
+    // ── Clear ─────────────────────────────────────────────────
+    function clearImage() {
+      originalImage = null;
+      const canvas = document.getElementById('pixelCanvas');
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+      document.getElementById('emptyState').classList.remove('hidden');
+      document.getElementById('canvasWrapper').classList.add('hidden');
+      document.getElementById('settingsPanel').classList.add('hidden');
+      document.getElementById('actionButtons').style.display = 'none';
+      document.getElementById('fileInput').value = '';
+      showToast('IMAGE CLEARED', 'info');
+    }
+
+    // ── Toast ─────────────────────────────────────────────────
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const el = document.createElement('div');
+      el.className = 'toast';
+      if (type === 'success') {
+        el.style.cssText = 'background:#00e619;color:#0f111a;border:2px solid #00e619';
+      } else if (type === 'error') {
+        el.style.cssText = 'background:#ef4444;color:#f2f2ee;border:2px solid #ef4444';
+      } else {
+        el.style.cssText = 'background:#141726;color:#f2f2ee;border:2px solid #2d3454';
+      }
+      el.textContent = message;
+      container.appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+
+    // ── Event listeners ───────────────────────────────────────
+    document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+
+    document.getElementById('pixelSizeSlider').addEventListener('input', (e) => {
+      pixelSize = parseInt(e.target.value);
+      document.getElementById('pixelSizeLabel').textContent = pixelSize + 'px';
+      if (originalImage) processImage();
+    });
+
+    document.getElementById('paletteSelect').addEventListener('change', (e) => {
+      palette = e.target.value;
+      if (originalImage) processImage();
+    });
+  </script>
+
+</body>
 </html>
