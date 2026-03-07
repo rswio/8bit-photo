@@ -11,6 +11,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate Tailwind CSS
+        run: |
+          npm install tailwindcss
+          npx tailwindcss -i input.css -o tailwind.css --minify
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -24,4 +34,9 @@ jobs:
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
-            --exclude "README.md"
+            --exclude "README.md" \
+            --exclude "tailwind.config.js" \
+            --exclude "input.css" \
+            --exclude "package.json" \
+            --exclude "package-lock.json" \
+            --exclude "node_modules/*"

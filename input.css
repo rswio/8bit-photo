@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { border-color: #2d3454; }
+  body { font-family: 'Press Start 2P', monospace; }
+}
+
+@layer utilities {
+  .text-glow-pink  { text-shadow: 0 0 10px rgba(255,77,166,.8), 0 0 30px rgba(255,77,166,.5); }
+  .text-glow-cyan  { text-shadow: 0 0 10px rgba(0,234,255,.8),  0 0 30px rgba(0,234,255,.5); }
+  .box-glow-pink   { box-shadow: 0 0 15px rgba(255,77,166,.5), 0 0 30px rgba(255,77,166,.2), inset 0 0 15px rgba(255,77,166,.1); }
+  .scanlines { position: relative; }
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(10,11,18,.3) 2px, rgba(10,11,18,.3) 4px);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
