@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 8-Bit Photo Converter Design System */
+
+@layer base {
+  :root {
+    --background: 230 25% 8%;
+    --foreground: 60 10% 95%;
+
+    --card: 230 20% 12%;
+    --card-foreground: 60 10% 95%;
+
+    --popover: 230 20% 12%;
+    --popover-foreground: 60 10% 95%;
+
+    --primary: 330 100% 65%;
+    --primary-foreground: 230 25% 8%;
+
+    --secondary: 185 100% 50%;
+    --secondary-foreground: 230 25% 8%;
+
+    --muted: 230 15% 18%;
+    --muted-foreground: 230 10% 55%;
+
+    --accent: 60 100% 60%;
+    --accent-foreground: 230 25% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 60 10% 95%;
+
+    --border: 230 20% 25%;
+    --input: 230 20% 20%;
+    --ring: 330 100% 65%;
+
+    --radius: 0px;
+
+    /* Custom tokens */
+    --neon-pink: 330 100% 65%;
+    --neon-cyan: 185 100% 50%;
+    --neon-yellow: 60 100% 60%;
+    --neon-green: 120 100% 45%;
+    --arcade-dark: 230 25% 8%;
+    --arcade-surface: 230 20% 12%;
+    --scanline: 230 25% 5%;
+
+    --glow-pink: 0 0 20px hsl(330 100% 65% / 0.6), 0 0 40px hsl(330 100% 65% / 0.3);
+    --glow-cyan: 0 0 20px hsl(185 100% 50% / 0.6), 0 0 40px hsl(185 100% 50% / 0.3);
+
+    --sidebar-background: 230 20% 12%;
+    --sidebar-foreground: 60 10% 95%;
+    --sidebar-primary: 330 100% 65%;
+    --sidebar-primary-foreground: 230 25% 8%;
+    --sidebar-accent: 230 15% 18%;
+    --sidebar-accent-foreground: 60 10% 95%;
+    --sidebar-border: 230 20% 25%;
+    --sidebar-ring: 330 100% 65%;
+  }
+
+  .dark {
+    --background: 230 25% 8%;
+    --foreground: 60 10% 95%;
+    --card: 230 20% 12%;
+    --card-foreground: 60 10% 95%;
+    --popover: 230 20% 12%;
+    --popover-foreground: 60 10% 95%;
+    --primary: 330 100% 65%;
+    --primary-foreground: 230 25% 8%;
+    --secondary: 185 100% 50%;
+    --secondary-foreground: 230 25% 8%;
+    --muted: 230 15% 18%;
+    --muted-foreground: 230 10% 55%;
+    --accent: 60 100% 60%;
+    --accent-foreground: 230 25% 8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 60 10% 95%;
+    --border: 230 20% 25%;
+    --input: 230 20% 20%;
+    --ring: 330 100% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Press Start 2P', monospace;
+  }
+}
+
+@layer utilities {
+  .text-glow-pink {
+    text-shadow: 0 0 10px hsl(var(--neon-pink) / 0.8), 0 0 30px hsl(var(--neon-pink) / 0.5);
+  }
+  
+  .text-glow-cyan {
+    text-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.8), 0 0 30px hsl(var(--neon-cyan) / 0.5);
+  }
+
+  .box-glow-pink {
+    box-shadow: 0 0 15px hsl(var(--neon-pink) / 0.5), 0 0 30px hsl(var(--neon-pink) / 0.2), inset 0 0 15px hsl(var(--neon-pink) / 0.1);
+  }
+
+  .box-glow-cyan {
+    box-shadow: 0 0 15px hsl(var(--neon-cyan) / 0.5), 0 0 30px hsl(var(--neon-cyan) / 0.2), inset 0 0 15px hsl(var(--neon-cyan) / 0.1);
+  }
+
+  .pixel-border {
+    border: 4px solid;
+    box-shadow: 
+      4px 0 0 0 currentColor,
+      -4px 0 0 0 currentColor,
+      0 4px 0 0 currentColor,
+      0 -4px 0 0 currentColor;
+  }
+
+  .scanlines {
+    position: relative;
+  }
+  
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--scanline) / 0.3) 2px,
+      hsl(var(--scanline) / 0.3) 4px
+    );
+    pointer-events: none;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      filter: brightness(1);
+    }
+    50% {
+      opacity: 0.85;
+      filter: brightness(1.1);
+    }
+  }
+
+  .animate-flicker {
+    animation: flicker 0.15s infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.97; }
+  }
+}

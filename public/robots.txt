@@ -1,0 +1,9 @@
+# robots.txt for 8bitphoto.co.uk
+# All search engine bots are welcome to crawl our site
+
+# Allow all bots to access all content
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://8bitphoto.co.uk/sitemap.xml

@@ -1,15 +1,13 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXV5LW6H1S"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-YXV5LW6H1S');
-  </script>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXV5LW6H1S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>8-Bit Photo Converter | Free Retro Pixel Art Generator</title>
@@ -530,119 +528,49 @@
             data[i] = nr; data[i+1] = ng; data[i+2] = nb;
           }
           offCtx.putImageData(imgData, 0, 0);
+=======
+      gtag('config', 'G-YXV5LW6H1S');
+    </script>
+    <script>
+        if (window.location.hostname === 'www.8bitphoto.co.uk') {
+            window.location.replace('https://8bitphoto.co.uk' + window.location.pathname + window.location.search);
+>>>>>>> parent of 0c1a57a (refactor: remove unused hooks, styles, and components; clean up project structure)
         }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8-Bit Photo Converter | Free Retro Pixel Art Generator</title>
+    <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private, works on all devices.">
+    <meta name="keywords" content="8-bit photo converter, pixel art generator, retro photo filter, 8bit image converter, pixelate photo, Game Boy filter, NES palette, retro image converter, free photo pixelator, online pixel art">
+    <meta name="author" content="8BitPhoto">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://8bitphoto.co.uk/">
 
-        ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(off, 0, 0, smallW, smallH, 0, 0, w, h);
-        showProcessing(false);
-      }, 0);
-    }
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://8bitphoto.co.uk/">
+    <meta property="og:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
+    <meta property="og:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.">
+    <meta property="og:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:site_name" content="8-Bit Photo Converter">
+    <meta property="og:locale" content="en_US">
 
-    // ── File loading ─────────────────────────────────────────
-    function loadFile(file) {
-      if (!file || !file.type.startsWith('image/')) {
-        showToast('PLEASE SELECT AN IMAGE FILE', 'error');
-        return;
-      }
-      originalName = (file.name.replace(/\.[^.]+$/, '') || '8bit-photo');
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          originalImage = img;
-          showImageUI();
-          processImage();
-          showToast('IMAGE LOADED!');
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://8bitphoto.co.uk/">
+    <meta name="twitter:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
+    <meta name="twitter:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes.">
+    <meta name="twitter:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
 
-    function handleFileSelect(e) { loadFile(e.target.files?.[0]); }
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  </head>
 
-    function handleDrop(e) {
-      e.preventDefault();
-      loadFile(e.dataTransfer.files?.[0]);
-    }
-
-    function handleDragOver(e) { e.preventDefault(); }
-
-    // Clipboard paste
-    document.addEventListener('paste', (e) => {
-      const item = Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'));
-      if (item) loadFile(item.getAsFile());
-    });
-
-    // ── UI state ─────────────────────────────────────────────
-    function showImageUI() {
-      document.getElementById('emptyState').classList.add('hidden');
-      document.getElementById('canvasWrapper').classList.remove('hidden');
-      document.getElementById('settingsPanel').classList.remove('hidden');
-      document.getElementById('actionButtons').style.display = 'flex';
-    }
-
-    function showProcessing(show) {
-      document.getElementById('processingOverlay').classList.toggle('hidden', !show);
-    }
-
-    // ── Download ─────────────────────────────────────────────
-    function downloadImage() {
-      const canvas = document.getElementById('pixelCanvas');
-      if (!canvas || !originalImage) return;
-      const link    = document.createElement('a');
-      link.download = originalName + '-8bit.png';
-      link.href     = canvas.toDataURL();
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      showToast('8-BIT IMAGE DOWNLOADED!');
-    }
-
-    // ── Clear ─────────────────────────────────────────────────
-    function clearImage() {
-      originalImage = null;
-      const canvas = document.getElementById('pixelCanvas');
-      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-      document.getElementById('emptyState').classList.remove('hidden');
-      document.getElementById('canvasWrapper').classList.add('hidden');
-      document.getElementById('settingsPanel').classList.add('hidden');
-      document.getElementById('actionButtons').style.display = 'none';
-      document.getElementById('fileInput').value = '';
-      showToast('IMAGE CLEARED', 'info');
-    }
-
-    // ── Toast ─────────────────────────────────────────────────
-    function showToast(message, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const el = document.createElement('div');
-      el.className = 'toast';
-      if (type === 'success') {
-        el.style.cssText = 'background:#00e619;color:#0f111a;border:2px solid #00e619';
-      } else if (type === 'error') {
-        el.style.cssText = 'background:#ef4444;color:#f2f2ee;border:2px solid #ef4444';
-      } else {
-        el.style.cssText = 'background:#141726;color:#f2f2ee;border:2px solid #2d3454';
-      }
-      el.textContent = message;
-      container.appendChild(el);
-      setTimeout(() => el.remove(), 3000);
-    }
-
-    // ── Event listeners ───────────────────────────────────────
-    document.getElementById('fileInput').addEventListener('change', handleFileSelect);
-
-    document.getElementById('pixelSizeSlider').addEventListener('input', (e) => {
-      pixelSize = parseInt(e.target.value);
-      document.getElementById('pixelSizeLabel').textContent = pixelSize + 'px';
-      if (originalImage) processImage();
-    });
-
-    document.getElementById('paletteSelect').addEventListener('change', (e) => {
-      palette = e.target.value;
-      if (originalImage) processImage();
-    });
-  </script>
-
-</body>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
