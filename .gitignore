@@ -1,13 +1,5 @@
-# Web project gitignore
-# Node modules
-node_modules/
-
-# Build output
-dist/
-build/
-
-# Temporary files
-*.tmp
+# Simple HTML/JS project gitignore
+# System files
 .DS_Store
 Thumbs.db
 
@@ -18,9 +10,5 @@ Thumbs.db
 # Log files
 *.log
 
-# Environment files
-.env
-.env.local
-
-# Cache directories
-.cache/
+# Temporary files
+*.tmp

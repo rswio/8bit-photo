@@ -24,20 +24,30 @@ Visit **[8bitphoto. co.uk](https://8bitphoto.co.uk/)** to try it out!
 
 ## 🛠️ Technologies
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Pure HTML5
+- Vanilla JavaScript
+- CSS3
+- HTML5 Canvas API
 - 100% Vibe Coded: Built with pure creativity and retro energy
 
 ## 📦 Project Structure
 
 ```
-├── index.html              # Main HTML structure
-├── script.js               # Image processing logic
-├── style.css               # Retro-styled interface
+├── index.html              # Main HTML file with embedded CSS
+├── script.js               # Image processing logic (vanilla JS)
+├── robots.txt              # SEO crawl rules
+├── sitemap.xml             # SEO sitemap
+└── favicon files           # Icons for various devices
 ```
+
+## 🚀 Quick Start
+
+No build process required! Simply:
+
+1. Open `index.html` in any modern web browser
+2. Or deploy the files to any web server/hosting service
+
+That's it! No npm install, no build steps, no dependencies.
 
 ## 🎯 How to Use
 
