@@ -16,8 +16,8 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8-Bit Photo Converter | Free Retro Pixel Art Generator</title>
-    <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private, works on all devices.">
-    <meta name="keywords" content="8-bit photo converter, pixel art generator, retro photo filter, 8bit image converter, pixelate photo, Game Boy filter, NES palette, retro image converter, free photo pixelator, online pixel art">
+    <meta name="description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, ZX Spectrum, CGA palettes. No uploads, 100% private, works on all devices.">
+    <meta name="keywords" content="8-bit photo converter, pixel art generator, retro photo filter, 8bit image converter, pixelate photo, Game Boy filter, NES palette, ZX Spectrum palette, retro image converter, free photo pixelator, online pixel art, colour palette, colour converter">
     <meta name="author" content="8BitPhoto">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#ff4d9e">
@@ -27,7 +27,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://8bitphoto.co.uk/">
     <meta property="og:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
-    <meta property="og:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.">
+    <meta property="og:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, ZX Spectrum, CGA colour palettes. No uploads, 100% private.">
     <meta property="og:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
@@ -39,7 +39,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="https://8bitphoto.co.uk/">
     <meta name="twitter:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
-    <meta name="twitter:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes.">
+    <meta name="twitter:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, ZX Spectrum, CGA colour palettes.">
     <meta name="twitter:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
     <meta name="twitter:image:alt" content="8-Bit Photo Converter logo — a free retro pixel art generator">
 
@@ -55,7 +55,7 @@
       "@type": "WebApplication",
       "name": "8-Bit Photo Converter",
       "url": "https://8bitphoto.co.uk/",
-      "description": "Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.",
+      "description": "Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, ZX Spectrum, CGA colour palettes. No uploads, 100% private.",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Any",
       "offers": {
@@ -64,9 +64,12 @@
         "priceCurrency": "GBP"
       },
       "featureList": [
-        "Game Boy palette",
-        "NES palette",
-        "CGA palette",
+        "Game Boy colour palette",
+        "NES colour palette",
+        "ZX Spectrum colour palette",
+        "PICO-8 colour palette",
+        "Commodore 64 colour palette",
+        "CGA colour palette",
         "Black and white palette",
         "Adjustable pixel size",
         "Client-side processing — no uploads",
@@ -84,7 +87,7 @@
           "name": "What is 8-bit pixel art?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "8-bit pixel art refers to the iconic visual style from classic video game consoles like the Nintendo Entertainment System (NES), Game Boy, and early PC graphics. This distinctive aesthetic features limited color palettes, blocky pixels, and nostalgic charm that defined an entire generation of gaming."
+            "text": "8-bit pixel art refers to the iconic visual style from classic video game consoles like the Nintendo Entertainment System (NES), Game Boy, ZX Spectrum, and early PC graphics. This distinctive aesthetic features limited colour palettes, blocky pixels, and nostalgic charm that defined an entire generation of gaming."
           }
         },
         {
@@ -92,7 +95,7 @@
           "name": "How does the 8-bit photo converter work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The free online 8-bit photo converter transforms any image into authentic retro pixel art instantly. Simply upload your photo, choose your preferred pixel size and color palette, and watch as your image transforms into nostalgic pixel art. The entire process happens in your browser — no uploads to external servers, ensuring your photos remain completely private."
+            "text": "The free online 8-bit photo converter transforms any image into authentic retro pixel art instantly. Simply upload your photo, choose your preferred pixel size and colour palette, and watch as your image transforms into nostalgic pixel art. The entire process happens in your browser — no uploads to external servers, ensuring your photos remain completely private."
           }
         },
         {
@@ -100,7 +103,7 @@
           "name": "What color palettes are available?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Four palettes are available: Game Boy (classic 4-shade green), NES (full 54-color Nintendo palette), CGA (IBM 4-color cyan/magenta/white), and Original (keeps your image's existing colors while applying pixelation)."
+            "text": "Seven colour palettes are available: Game Boy (classic 4-shade green), NES (full 54-colour Nintendo palette), ZX Spectrum (15 colours from the iconic British home computer), PICO-8 (16-colour modern retro palette), Commodore 64 (16-colour C64 palette), CGA (IBM 4-colour cyan/magenta/white), and Original (keeps your image's existing colours while applying pixelation)."
           }
         }
       ]
@@ -840,14 +843,17 @@
 
           <div class="control-group">
             <div class="control-label">
-              <span>COLOR PALETTE</span>
+              <span>COLOUR PALETTE</span>
             </div>
             <select id="palette">
-              <option value="original">ORIGINAL COLORS</option>
+              <option value="original">ORIGINAL COLOURS</option>
               <option value="gameboy">GAME BOY</option>
               <option value="nes">NES PALETTE</option>
               <option value="bw">BLACK &amp; WHITE</option>
               <option value="cga">CGA (CYAN/MAGENTA)</option>
+              <option value="spectrum">ZX SPECTRUM</option>
+              <option value="pico8">PICO-8</option>
+              <option value="c64">COMMODORE 64</option>
             </select>
           </div>
         </div>
@@ -907,16 +913,16 @@
 
       <section class="content-section">
         <h2 style="color: var(--pink);">WHAT IS 8-BIT PIXEL ART?</h2>
-        <p>8-bit pixel art refers to the iconic visual style from classic video game consoles like the Nintendo Entertainment System (NES), Game Boy, and early PC graphics. This distinctive aesthetic features limited color palettes, blocky pixels, and nostalgic charm that defined an entire generation of gaming.</p>
+        <p>8-bit pixel art refers to the iconic visual style from classic video game consoles like the Nintendo Entertainment System (NES), Game Boy, ZX Spectrum, and early PC graphics. This distinctive aesthetic features limited colour palettes, blocky pixels, and nostalgic charm that defined an entire generation of gaming.</p>
       </section>
 
       <section class="content-section">
         <h2 style="color: var(--cyan);">HOW DOES THE CONVERTER WORK?</h2>
-        <p>Our free online 8-bit photo converter transforms any image into authentic retro pixel art instantly. Simply upload your photo, choose your preferred pixel size and color palette, and watch as your image transforms into nostalgic pixel art. The entire process happens in your browser — no uploads to external servers, ensuring your photos remain completely private.</p>
+        <p>Our free online 8-bit photo converter transforms any image into authentic retro pixel art instantly. Simply upload your photo, choose your preferred pixel size and colour palette, and watch as your image transforms into nostalgic pixel art. The entire process happens in your browser — no uploads to external servers, ensuring your photos remain completely private.</p>
       </section>
 
       <section class="content-section">
-        <h2 style="color: var(--yellow);">AVAILABLE COLOR PALETTES</h2>
+        <h2 style="color: var(--yellow);">AVAILABLE COLOUR PALETTES</h2>
         <div class="palette-grid">
           <div class="palette-card">
             <h3>GAME BOY</h3>
@@ -924,15 +930,27 @@
           </div>
           <div class="palette-card">
             <h3>NES</h3>
-            <p>The full 54-color palette from the Nintendo Entertainment System, bringing back memories of Super Mario Bros and The Legend of Zelda.</p>
+            <p>The full 54-colour palette from the Nintendo Entertainment System, bringing back memories of Super Mario Bros and The Legend of Zelda.</p>
+          </div>
+          <div class="palette-card">
+            <h3>ZX SPECTRUM</h3>
+            <p>The iconic 15-colour palette from Sinclair's legendary British home computer. Bright, punchy colours that defined a generation of UK gaming in the 1980s.</p>
+          </div>
+          <div class="palette-card">
+            <h3>PICO-8</h3>
+            <p>The beloved 16-colour palette from the PICO-8 fantasy console, popular with modern indie pixel artists for its warm, expressive range of colours.</p>
+          </div>
+          <div class="palette-card">
+            <h3>COMMODORE 64</h3>
+            <p>The classic 16-colour palette from the Commodore 64, one of the best-selling home computers of all time, known for its distinctive warm browns and bright accents.</p>
           </div>
           <div class="palette-card">
             <h3>CGA</h3>
-            <p>The iconic 4-color palette from IBM's Color Graphics Adapter, featuring the memorable cyan, magenta, and white combination from early PC gaming.</p>
+            <p>The iconic 4-colour palette from IBM's Colour Graphics Adapter, featuring the memorable cyan, magenta, and white combination from early PC gaming.</p>
           </div>
           <div class="palette-card">
             <h3>ORIGINAL</h3>
-            <p>Keep your image's original colors while applying the pixelation effect for a modern take on retro aesthetics.</p>
+            <p>Keep your image's original colours while applying the pixelation effect for a modern take on retro aesthetics.</p>
           </div>
         </div>
       </section>

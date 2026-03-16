@@ -26,6 +26,23 @@ const PALETTES = {
     [255, 85, 255],
     [255, 255, 255],
   ],
+  spectrum: [
+    [0, 0, 0],
+    [0, 0, 205], [205, 0, 0], [205, 0, 205], [0, 205, 0], [0, 205, 205], [205, 205, 0], [205, 205, 205],
+    [0, 0, 255], [255, 0, 0], [255, 0, 255], [0, 255, 0], [0, 255, 255], [255, 255, 0], [255, 255, 255],
+  ],
+  pico8: [
+    [0, 0, 0], [29, 43, 83], [126, 37, 83], [0, 135, 81],
+    [171, 82, 54], [95, 87, 79], [194, 195, 199], [255, 241, 232],
+    [255, 0, 77], [255, 163, 0], [255, 236, 39], [0, 228, 54],
+    [41, 173, 255], [131, 118, 156], [255, 119, 168], [255, 204, 170],
+  ],
+  c64: [
+    [0, 0, 0], [255, 255, 255], [136, 0, 0], [170, 255, 238],
+    [204, 68, 204], [0, 204, 85], [0, 0, 170], [238, 238, 119],
+    [221, 136, 85], [102, 68, 0], [255, 119, 119], [51, 51, 51],
+    [119, 119, 119], [170, 255, 102], [0, 136, 255], [187, 187, 187],
+  ],
 };
 
 // DOM Elements
@@ -93,6 +110,21 @@ function applyPalette(r, g, b, paletteType) {
 
   if (paletteType === 'nes') {
     const nearest = findNearestColor(r, g, b, PALETTES.nes);
+    return [nearest[0], nearest[1], nearest[2]];
+  }
+
+  if (paletteType === 'spectrum') {
+    const nearest = findNearestColor(r, g, b, PALETTES.spectrum);
+    return [nearest[0], nearest[1], nearest[2]];
+  }
+
+  if (paletteType === 'pico8') {
+    const nearest = findNearestColor(r, g, b, PALETTES.pico8);
+    return [nearest[0], nearest[1], nearest[2]];
+  }
+
+  if (paletteType === 'c64') {
+    const nearest = findNearestColor(r, g, b, PALETTES.c64);
     return [nearest[0], nearest[1], nearest[2]];
   }
 
