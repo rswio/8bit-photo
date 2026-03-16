@@ -44,423 +44,681 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
+
     <style>
+      /* ── DESIGN TOKENS ── */
+      :root {
+        --pink:       #ff4d9e;
+        --cyan:       #00d9ff;
+        --yellow:     #ffeb3b;
+        --green:      #00e676;
+        --red:        #ff1744;
+        --bg:         #0f1419;
+        --bg-card:    #1a1f28;
+        --bg-deep:    #0a0d12;
+        --bg-input:   #2d3748;
+        --text:       #f2f2ed;
+        --text-dim:   #8a8a82;
+        --glow-pink:  rgba(255, 77, 158, 0.8);
+        --glow-cyan:  rgba(0, 217, 255, 0.8);
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
 
+      /* ── BODY — pixel dot grid background ── */
       body {
         font-family: 'Press Start 2P', monospace;
-        background: #0f1419;
-        color: #f2f2ed;
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(circle, rgba(255, 77, 158, 0.06) 1px, transparent 1px),
+          radial-gradient(circle, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
+        background-size: 24px 24px, 48px 48px;
+        background-position: 0 0, 12px 12px;
+        color: var(--text);
         min-height: 100vh;
       }
 
+      /* ── ANIMATED RAINBOW TOP BAR ── */
       .top-bar {
-        height: 8px;
-        background: linear-gradient(90deg, #ff4d9e 0%, #00d9ff 50%, #ffeb3b 100%);
+        height: 10px;
+        background: linear-gradient(
+          90deg,
+          #ff4d9e 0%,
+          #ff6b35 16.6%,
+          #ffeb3b 33.3%,
+          #00e676 50%,
+          #00d9ff 66.6%,
+          #9c5fff 83.3%,
+          #ff4d9e 100%
+        );
+        background-size: 200% 100%;
+        animation: rainbow-slide 4s linear infinite;
       }
 
-      .container {
+      @keyframes rainbow-slide {
+        0%   { background-position: 0% 0%; }
+        100% { background-position: 200% 0%; }
+      }
+
+      /* ── HEADER META BAR ── */
+      .header-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         max-width: 1200px;
         margin: 0 auto;
-        padding: 2rem 1rem;
+        padding: 0.75rem 1.5rem 0;
+        font-size: 0.4375rem;
+        color: var(--text-dim);
+        letter-spacing: 0.05em;
       }
 
+      .header-meta-score { color: var(--yellow); }
+
+      .header-meta-credit {
+        color: var(--cyan);
+        text-shadow: 0 0 8px var(--glow-cyan);
+        animation: blink 1.5s step-end infinite;
+      }
+
+      /* ── HEADER ── */
       header {
         text-align: center;
-        margin-bottom: 3rem;
+        padding: 2rem 1rem 3rem;
+        animation: fadeInUp 0.6s ease-out both;
+      }
+
+      .press-start {
+        font-size: 0.5rem;
+        color: var(--yellow);
+        letter-spacing: 0.3em;
+        margin-bottom: 1.75rem;
+        text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+        animation: blink 1.2s step-end infinite;
       }
 
       h1 {
-        font-size: clamp(1.2rem, 4vw, 2.5rem);
-        color: #ff4d9e;
-        text-shadow: 0 0 10px rgba(255, 77, 158, 0.8), 0 0 30px rgba(255, 77, 158, 0.5);
-        margin-bottom: 1rem;
-        letter-spacing: 0.1em;
+        font-size: clamp(1.4rem, 4.5vw, 2.75rem);
+        color: var(--pink);
+        text-shadow:
+          0 0 10px var(--glow-pink),
+          0 0 30px rgba(255, 77, 158, 0.5),
+          0 0 60px rgba(255, 77, 158, 0.2);
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.08em;
+        position: relative;
+        display: inline-block;
+      }
+
+      /* Glitch ghost layer */
+      h1::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0; top: 0;
+        width: 100%;
+        color: var(--cyan);
+        opacity: 0;
+        animation: glitch 6s infinite;
+        pointer-events: none;
+      }
+
+      @keyframes glitch {
+        0%, 88%, 100% {
+          opacity: 0;
+          clip-path: inset(0 0 100% 0);
+          transform: translate(0);
+        }
+        89% {
+          opacity: 0.85;
+          clip-path: inset(15% 0 55% 0);
+          transform: translate(-5px, 2px);
+        }
+        91% {
+          opacity: 0.85;
+          clip-path: inset(55% 0 8% 0);
+          transform: translate(5px, -2px);
+        }
+        93% {
+          opacity: 0.7;
+          clip-path: inset(35% 0 35% 0);
+          transform: translate(-3px, 0);
+        }
+        95% {
+          opacity: 0;
+          clip-path: inset(0 0 100% 0);
+          transform: translate(0);
+        }
       }
 
       h2 {
-        font-size: clamp(1rem, 3vw, 1.5rem);
-        color: #00d9ff;
-        text-shadow: 0 0 10px rgba(0, 217, 255, 0.8), 0 0 30px rgba(0, 217, 255, 0.5);
+        font-size: clamp(0.875rem, 2.5vw, 1.375rem);
+        color: var(--cyan);
+        text-shadow: 0 0 10px var(--glow-cyan), 0 0 30px rgba(0, 217, 255, 0.4);
         margin-bottom: 1.5rem;
       }
 
       .subtitle {
-        font-size: 0.625rem;
-        color: #8a8a82;
-        max-width: 500px;
+        font-size: 0.5rem;
+        color: var(--text-dim);
+        max-width: 520px;
         margin: 0 auto;
-        line-height: 1.6;
+        line-height: 2;
+        letter-spacing: 0.05em;
       }
 
+      /* ── LAYOUT ── */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem 3rem;
+      }
+
+      /* ── CONVERTER BOX ── */
       .converter-box {
         max-width: 900px;
-        margin: 0 auto;
+        margin: 0 auto 5rem;
+        animation: fadeInUp 0.6s ease-out 0.15s both;
       }
 
+      /* ── UPLOAD BUTTON ── */
       .upload-btn {
         display: inline-flex;
         align-items: center;
         gap: 0.75rem;
-        padding: 1rem 2rem;
-        background: #1a1f28;
-        border: 4px solid #ff4d9e;
-        color: #ff4d9e;
-        font-size: 0.75rem;
+        padding: 1.25rem 2.5rem;
+        background: rgba(255, 77, 158, 0.04);
+        border: 3px solid var(--pink);
+        color: var(--pink);
+        font-size: 0.6875rem;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
         margin-bottom: 2rem;
         font-family: 'Press Start 2P', monospace;
-        box-shadow: 0 0 20px rgba(255, 77, 158, 0.3);
+        box-shadow: 0 0 18px rgba(255, 77, 158, 0.2);
+        position: relative;
       }
+
+      /* Corner bracket decorations */
+      .upload-btn::before,
+      .upload-btn::after {
+        content: '';
+        position: absolute;
+        width: 12px; height: 12px;
+        border-color: var(--cyan);
+        border-style: solid;
+        transition: width 0.2s, height 0.2s;
+      }
+      .upload-btn::before { top: -3px; left: -3px; border-width: 3px 0 0 3px; }
+      .upload-btn::after  { bottom: -3px; right: -3px; border-width: 0 3px 3px 0; }
 
       .upload-btn:hover {
-        background: #ff4d9e;
-        color: #0f1419;
+        background: rgba(255, 77, 158, 0.12);
+        box-shadow: 0 0 32px rgba(255, 77, 158, 0.35);
+        transform: translateY(-2px);
+      }
+      .upload-btn:hover::before,
+      .upload-btn:hover::after {
+        width: 20px; height: 20px;
+      }
+      .upload-btn:active {
+        transform: translateY(0) scale(0.97);
       }
 
+      /* ── CONTROLS PANEL ── */
       .controls {
-        background: #1a1f28;
-        border: 4px solid #00d9ff;
-        padding: 1.5rem;
+        background: var(--bg-card);
+        border: 3px solid var(--cyan);
+        padding: 1.75rem;
         margin-bottom: 2rem;
         display: none;
+        box-shadow: 0 0 24px rgba(0, 217, 255, 0.08);
+        position: relative;
       }
+
+      /* Opposing corner brackets */
+      .controls::before,
+      .controls::after {
+        content: '';
+        position: absolute;
+        width: 14px; height: 14px;
+        border-color: var(--yellow);
+        border-style: solid;
+      }
+      .controls::before { bottom: -3px; left: -3px;  border-width: 0 0 3px 3px; }
+      .controls::after  { top: -3px;    right: -3px; border-width: 3px 3px 0 0; }
 
       .controls.active {
         display: block;
-        animation: fadeIn 0.3s;
+        animation: fadeInUp 0.3s ease-out;
       }
 
-      .control-group {
-        margin-bottom: 1.5rem;
-      }
-
-      .control-group:last-child {
-        margin-bottom: 0;
-      }
+      .control-group { margin-bottom: 1.5rem; }
+      .control-group:last-child { margin-bottom: 0; }
 
       .control-label {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 0.625rem;
-        color: #00d9ff;
+        font-size: 0.5625rem;
+        color: var(--cyan);
         margin-bottom: 0.75rem;
-        text-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+        text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
       }
 
       .control-value {
-        color: #ff4d9e;
-        text-shadow: 0 0 10px rgba(255, 77, 158, 0.6);
+        color: var(--pink);
+        text-shadow: 0 0 8px rgba(255, 77, 158, 0.5);
       }
 
+      /* ── RANGE SLIDER ── */
       input[type="range"] {
         width: 100%;
         height: 8px;
-        background: #2d3748;
-        border: 2px solid #ff4d9e;
+        background: var(--bg-input);
+        border: 2px solid rgba(255, 77, 158, 0.35);
         outline: none;
         -webkit-appearance: none;
+        cursor: pointer;
+        transition: border-color 0.2s;
       }
+      input[type="range"]:hover { border-color: rgba(255, 77, 158, 0.7); }
 
       input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
-        background: #ff4d9e;
+        width: 20px; height: 20px;
+        background: var(--pink);
         cursor: pointer;
-        box-shadow: 0 0 10px rgba(255, 77, 158, 0.8);
+        box-shadow: 0 0 12px rgba(255, 77, 158, 0.9);
+        transition: transform 0.1s;
       }
-
+      input[type="range"]::-webkit-slider-thumb:active {
+        transform: scale(1.2);
+      }
       input[type="range"]::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        background: #ff4d9e;
+        width: 20px; height: 20px;
+        background: var(--pink);
         cursor: pointer;
         border: none;
-        box-shadow: 0 0 10px rgba(255, 77, 158, 0.8);
+        box-shadow: 0 0 12px rgba(255, 77, 158, 0.9);
       }
 
+      /* ── SELECT DROPDOWN ── */
       select {
         width: 100%;
         padding: 0.75rem;
-        background: #2d3748;
-        border: 2px solid rgba(255, 77, 158, 0.5);
-        color: #f2f2ed;
+        background: var(--bg-input);
+        border: 2px solid rgba(255, 77, 158, 0.35);
+        color: var(--text);
         font-family: 'Press Start 2P', monospace;
-        font-size: 0.625rem;
+        font-size: 0.5625rem;
         cursor: pointer;
+        transition: border-color 0.2s, box-shadow 0.2s;
       }
-
       select:focus {
         outline: none;
-        border-color: #ff4d9e;
+        border-color: var(--pink);
+        box-shadow: 0 0 12px rgba(255, 77, 158, 0.25);
       }
 
+      /* ── CANVAS CONTAINER ── */
       .canvas-container {
         position: relative;
         width: 100%;
         aspect-ratio: 16 / 9;
-        background: #0a0d12;
-        border: 4px solid rgba(242, 242, 237, 0.3);
+        background: var(--bg-deep);
+        border: 3px solid rgba(242, 242, 237, 0.12);
         overflow: hidden;
         margin-bottom: 2rem;
+        transition: border-color 0.4s ease, box-shadow 0.4s ease;
       }
 
+      /* Glow state when image is loaded */
+      .canvas-container.has-image {
+        border-color: rgba(255, 77, 158, 0.55);
+        box-shadow: 0 0 32px rgba(255, 77, 158, 0.12), inset 0 0 32px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Drag-over highlight */
+      .canvas-container.drag-over {
+        border-color: var(--cyan) !important;
+        box-shadow: 0 0 48px rgba(0, 217, 255, 0.35) !important;
+      }
+
+      /* CRT scanlines overlay */
       .canvas-container::before {
         content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        position: absolute; inset: 0;
         background: repeating-linear-gradient(
           0deg,
-          rgba(0, 0, 0, 0.15),
-          rgba(0, 0, 0, 0.15) 2px,
-          transparent 2px,
+          rgba(0, 0, 0, 0.13),
+          rgba(0, 0, 0, 0.13) 1px,
+          transparent 1px,
           transparent 4px
         );
         pointer-events: none;
-        z-index: 1;
+        z-index: 3;
       }
 
-      .placeholder {
+      /* Slow scanline sweep */
+      .canvas-container::after {
+        content: '';
         position: absolute;
-        inset: 0;
+        left: 0; right: 0;
+        top: -40%;
+        height: 40%;
+        background: linear-gradient(
+          0deg,
+          transparent 0%,
+          rgba(255, 77, 158, 0.025) 50%,
+          transparent 100%
+        );
+        animation: scanline-sweep 9s linear infinite;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      @keyframes scanline-sweep {
+        0%   { top: -40%; }
+        100% { top: 100%; }
+      }
+
+      /* ── PLACEHOLDER ── */
+      .placeholder {
+        position: absolute; inset: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 1rem;
-        color: #8a8a82;
+        color: var(--text-dim);
+        z-index: 1;
       }
 
       .placeholder svg {
-        width: 64px;
-        height: 64px;
-        opacity: 0.5;
+        width: 60px; height: 60px;
+        opacity: 0.25;
       }
 
       .placeholder-text {
-        font-size: 0.625rem;
-        animation: pulse 2s infinite;
+        font-size: 0.5625rem;
+        animation: pulse 2.5s ease-in-out infinite;
       }
 
       .placeholder-hint {
-        font-size: 0.5rem;
-        opacity: 0.5;
+        font-size: 0.4375rem;
+        opacity: 0.45;
       }
 
+      /* ── CANVAS ── */
       canvas {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        top: 50%; left: 50%;
         transform: translate(-50%, -50%);
         max-width: 100%;
         max-height: 100%;
         image-rendering: pixelated;
         image-rendering: -moz-crisp-edges;
         image-rendering: crisp-edges;
+        z-index: 1;
       }
 
+      /* ── PROCESSING OVERLAY ── */
       .processing {
-        position: absolute;
-        inset: 0;
-        background: rgba(15, 20, 25, 0.9);
+        position: absolute; inset: 0;
+        background: rgba(10, 13, 18, 0.92);
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 2;
+        z-index: 10;
       }
-
-      .processing.active {
-        display: flex;
-      }
+      .processing.active { display: flex; }
 
       .processing-text {
         font-size: 0.75rem;
-        color: #ff4d9e;
-        animation: blink 1s infinite;
+        color: var(--pink);
+        text-shadow: 0 0 12px var(--glow-pink);
+        animation: blink 0.6s step-end infinite;
       }
 
+      /* ── ACTION BUTTONS ── */
       .actions {
         display: none;
         justify-content: center;
         gap: 1rem;
         margin-bottom: 3rem;
       }
-
       .actions.active {
         display: flex;
-        animation: fadeIn 0.3s;
+        animation: fadeInUp 0.3s ease-out;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 1.5rem 2rem;
+        padding: 1.25rem 2rem;
         font-family: 'Press Start 2P', monospace;
-        font-size: 0.625rem;
-        border: 4px solid;
+        font-size: 0.5625rem;
+        border: 3px solid;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
       }
+      .btn:active { transform: scale(0.96); }
 
       .btn-download {
-        background: #00e676;
-        color: #0f1419;
-        border-color: #00e676;
+        background: var(--green);
+        color: var(--bg);
+        border-color: var(--green);
+        box-shadow: 0 0 18px rgba(0, 230, 118, 0.18);
       }
-
       .btn-download:hover {
         background: transparent;
-        color: #00e676;
+        color: var(--green);
+        box-shadow: 0 0 28px rgba(0, 230, 118, 0.35);
       }
 
       .btn-clear {
         background: transparent;
-        color: #ff1744;
-        border-color: #ff1744;
+        color: var(--red);
+        border-color: var(--red);
       }
-
       .btn-clear:hover {
-        background: #ff1744;
-        color: #f2f2ed;
+        background: var(--red);
+        color: var(--text);
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.3);
       }
 
+      /* ── FEATURE CARDS ── */
       .features {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
-        margin-bottom: 3rem;
+        margin-bottom: 5rem;
+        animation: fadeInUp 0.6s ease-out 0.3s both;
       }
 
       .feature-card {
-        padding: 1.5rem;
-        background: #1a1f28;
-        border: 2px solid rgba(255, 77, 158, 0.3);
+        padding: 2rem 1.5rem 1.75rem;
+        background: var(--bg-card);
+        border: 2px solid rgba(255, 77, 158, 0.15);
         text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
       }
+
+      /* Animated top accent bar */
+      .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--pink), var(--cyan));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s ease;
+      }
+
+      .feature-card:hover {
+        border-color: rgba(255, 77, 158, 0.4);
+        box-shadow: 0 0 24px rgba(255, 77, 158, 0.08);
+        transform: translateY(-5px);
+      }
+      .feature-card:hover::before { transform: scaleX(1); }
 
       .feature-icon {
         font-size: 2rem;
         margin-bottom: 1rem;
+        display: block;
       }
 
       .feature-title {
-        font-size: 0.625rem;
-        color: #ff4d9e;
-        margin-bottom: 0.75rem;
+        font-size: 0.5625rem;
+        color: var(--pink);
+        margin-bottom: 0.875rem;
       }
 
       .feature-text {
-        font-size: 0.5rem;
-        color: #8a8a82;
-        line-height: 1.6;
+        font-size: 0.4375rem;
+        color: var(--text-dim);
+        line-height: 2;
       }
 
+      /* ── CONTENT SECTIONS ── */
       .content-section {
         max-width: 800px;
-        margin: 0 auto 3rem;
+        margin: 0 auto 4rem;
         text-align: center;
+        animation: fadeInUp 0.6s ease-out 0.45s both;
       }
 
       .content-section h2 {
         font-size: 0.875rem;
-        margin-bottom: 1rem;
-      }
-
-      .content-section p {
-        font-size: 0.625rem;
-        color: #8a8a82;
-        line-height: 1.8;
         margin-bottom: 1.5rem;
       }
 
+      .content-section p {
+        font-size: 0.5rem;
+        color: var(--text-dim);
+        line-height: 2.2;
+        margin-bottom: 1.5rem;
+      }
+
+      /* ── PALETTE GRID ── */
       .palette-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
         text-align: left;
       }
 
       .palette-card {
-        padding: 1rem;
-        background: rgba(26, 31, 40, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.25rem 1rem;
+        background: rgba(26, 31, 40, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        transition: border-color 0.25s, background 0.25s;
+      }
+      .palette-card:hover {
+        border-color: rgba(0, 217, 255, 0.3);
+        background: rgba(26, 31, 40, 0.9);
       }
 
       .palette-card h3 {
-        font-size: 0.625rem;
-        color: #ff4d9e;
-        margin-bottom: 0.5rem;
+        font-size: 0.5625rem;
+        color: var(--pink);
+        margin-bottom: 0.625rem;
       }
 
       .palette-card p {
-        font-size: 0.5rem;
-        margin-bottom: 0;
+        font-size: 0.4375rem;
+        color: var(--text-dim);
+        line-height: 1.8;
       }
 
+      /* ── FOOTER ── */
+      footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 2.5rem 1rem;
+        margin-top: 2rem;
+      }
+
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.875rem;
+        text-align: center;
+      }
+
+      .footer-brand {
+        font-size: 0.5625rem;
+        color: var(--pink);
+        text-shadow: 0 0 8px rgba(255, 77, 158, 0.4);
+      }
+
+      .footer-tagline {
+        font-size: 0.4375rem;
+        color: var(--text-dim);
+        line-height: 2;
+        max-width: 480px;
+      }
+
+      /* ── TOAST ── */
       .toast {
         position: fixed;
         bottom: 2rem;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%) translateY(12px);
         padding: 1rem 2rem;
-        background: #1a1f28;
-        border: 2px solid #00e676;
-        color: #f2f2ed;
-        font-size: 0.625rem;
+        background: var(--bg-card);
+        border: 2px solid var(--green);
+        color: var(--text);
+        font-size: 0.5625rem;
         z-index: 1000;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 0 20px rgba(0, 230, 118, 0.2);
       }
-
       .toast.show {
         opacity: 1;
+        transform: translateX(-50%) translateY(0);
       }
 
-      .center {
-        text-align: center;
-      }
+      /* ── UTILS ── */
+      .center { text-align: center; }
+      input[type="file"] { display: none; }
 
-      input[type="file"] {
-        display: none;
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
+      /* ── KEYFRAMES ── */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: translateY(0); }
       }
 
       @keyframes pulse {
         0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+        50%       { opacity: 0.4; }
       }
 
       @keyframes blink {
         0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
+        50%       { opacity: 0; }
       }
 
+      /* ── RESPONSIVE ── */
       @media (max-width: 768px) {
-        .btn {
-          padding: 1rem 1.5rem;
-        }
-        
+        .header-meta { display: none; }
+        .btn { padding: 1rem 1.5rem; }
         .actions {
           flex-direction: column;
           align-items: stretch;
@@ -471,14 +729,21 @@
 
   <body>
     <div class="top-bar"></div>
-    
-    <div class="container">
-      <header>
-        <h1>8-BIT PHOTO</h1>
-        <h2>CONVERTER</h2>
-        <p class="subtitle">TRANSFORM YOUR PHOTOS INTO AUTHENTIC RETRO PIXEL ART</p>
-      </header>
 
+    <div class="header-meta">
+      <span class="header-meta-score">HI-SCORE: 999999</span>
+      <span class="header-meta-credit">&#9679; INSERT COIN &#9679;</span>
+      <span class="header-meta-score">CREDIT: 00</span>
+    </div>
+
+    <header>
+      <p class="press-start">&#9654; PRESS START &#9664;</p>
+      <h1 data-text="8-BIT PHOTO">8-BIT PHOTO</h1>
+      <h2>CONVERTER</h2>
+      <p class="subtitle">TRANSFORM YOUR PHOTOS INTO AUTHENTIC RETRO PIXEL ART</p>
+    </header>
+
+    <div class="container">
       <div class="converter-box">
         <div class="center">
           <label for="fileInput" class="upload-btn">
@@ -509,7 +774,7 @@
               <option value="original">ORIGINAL COLORS</option>
               <option value="gameboy">GAME BOY</option>
               <option value="nes">NES PALETTE</option>
-              <option value="bw">BLACK & WHITE</option>
+              <option value="bw">BLACK &amp; WHITE</option>
               <option value="cga">CGA (CYAN/MAGENTA)</option>
             </select>
           </div>
@@ -523,7 +788,7 @@
               <polyline points="21 15 16 10 5 21"></polyline>
             </svg>
             <p class="placeholder-text">UPLOAD AN IMAGE TO START</p>
-            <p class="placeholder-hint">OR DRAG & DROP HERE</p>
+            <p class="placeholder-hint">OR DRAG &amp; DROP HERE</p>
           </div>
           <canvas id="canvas"></canvas>
           <div class="processing" id="processing">
@@ -552,34 +817,34 @@
 
       <section class="features">
         <div class="feature-card">
-          <div class="feature-icon">🎮</div>
+          <span class="feature-icon">🎮</span>
           <h3 class="feature-title">RETRO PALETTES</h3>
           <p class="feature-text">GAME BOY, NES, CGA AND MORE CLASSIC PALETTES</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🔒</div>
+          <span class="feature-icon">🔒</span>
           <h3 class="feature-title">100% PRIVATE</h3>
           <p class="feature-text">ALL PROCESSING HAPPENS IN YOUR BROWSER</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">⚡</div>
+          <span class="feature-icon">⚡</span>
           <h3 class="feature-title">INSTANT RESULTS</h3>
           <p class="feature-text">REAL-TIME PREVIEW AS YOU ADJUST SETTINGS</p>
         </div>
       </section>
 
       <section class="content-section">
-        <h2 style="color: #ff4d9e;">WHAT IS 8-BIT PIXEL ART?</h2>
+        <h2 style="color: var(--pink);">WHAT IS 8-BIT PIXEL ART?</h2>
         <p>8-bit pixel art refers to the iconic visual style from classic video game consoles like the Nintendo Entertainment System (NES), Game Boy, and early PC graphics. This distinctive aesthetic features limited color palettes, blocky pixels, and nostalgic charm that defined an entire generation of gaming.</p>
       </section>
 
       <section class="content-section">
-        <h2 style="color: #00d9ff;">HOW DOES THE CONVERTER WORK?</h2>
+        <h2 style="color: var(--cyan);">HOW DOES THE CONVERTER WORK?</h2>
         <p>Our free online 8-bit photo converter transforms any image into authentic retro pixel art instantly. Simply upload your photo, choose your preferred pixel size and color palette, and watch as your image transforms into nostalgic pixel art. The entire process happens in your browser — no uploads to external servers, ensuring your photos remain completely private.</p>
       </section>
 
       <section class="content-section">
-        <h2 style="color: #ffeb3b;">AVAILABLE COLOR PALETTES</h2>
+        <h2 style="color: var(--yellow);">AVAILABLE COLOR PALETTES</h2>
         <div class="palette-grid">
           <div class="palette-card">
             <h3>GAME BOY</h3>
@@ -601,11 +866,15 @@
       </section>
     </div>
 
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">8-BIT PHOTO &#169;</div>
+        <p class="footer-tagline">FREE ONLINE TOOL &mdash; ALL PROCESSING IN YOUR BROWSER &mdash; NO UPLOADS &mdash; FULLY PRIVATE</p>
+      </div>
+    </footer>
+
     <div class="toast" id="toast"></div>
 
     <script src="script.js"></script>
-  </body>
-</html>
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
