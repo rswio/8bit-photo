@@ -20,6 +20,7 @@
     <meta name="keywords" content="8-bit photo converter, pixel art generator, retro photo filter, 8bit image converter, pixelate photo, Game Boy filter, NES palette, retro image converter, free photo pixelator, online pixel art">
     <meta name="author" content="8BitPhoto">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ff4d9e">
     <link rel="canonical" href="https://8bitphoto.co.uk/">
 
     <!-- Open Graph / Facebook -->
@@ -30,20 +31,81 @@
     <meta property="og:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="8-Bit Photo Converter logo — a free retro pixel art generator">
     <meta property="og:site_name" content="8-Bit Photo Converter">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="https://8bitphoto.co.uk/">
     <meta name="twitter:title" content="8-Bit Photo Converter - Transform Photos into Retro Pixel Art">
     <meta name="twitter:description" content="Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes.">
     <meta name="twitter:image" content="https://8bitphoto.co.uk/android-chrome-512x512.png">
+    <meta name="twitter:image:alt" content="8-Bit Photo Converter logo — a free retro pixel art generator">
 
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "8-Bit Photo Converter",
+      "url": "https://8bitphoto.co.uk/",
+      "description": "Convert your photos into retro 8-bit pixel art instantly in your browser. Free online tool with Game Boy, NES, CGA palettes. No uploads, 100% private.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP"
+      },
+      "featureList": [
+        "Game Boy palette",
+        "NES palette",
+        "CGA palette",
+        "Black and white palette",
+        "Adjustable pixel size",
+        "Client-side processing — no uploads",
+        "PNG download"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is 8-bit pixel art?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "8-bit pixel art refers to the iconic visual style from classic video game consoles like the Nintendo Entertainment System (NES), Game Boy, and early PC graphics. This distinctive aesthetic features limited color palettes, blocky pixels, and nostalgic charm that defined an entire generation of gaming."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the 8-bit photo converter work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The free online 8-bit photo converter transforms any image into authentic retro pixel art instantly. Simply upload your photo, choose your preferred pixel size and color palette, and watch as your image transforms into nostalgic pixel art. The entire process happens in your browser — no uploads to external servers, ensuring your photos remain completely private."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What color palettes are available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Four palettes are available: Game Boy (classic 4-shade green), NES (full 54-color Nintendo palette), CGA (IBM 4-color cyan/magenta/white), and Original (keeps your image's existing colors while applying pixelation)."
+          }
+        }
+      ]
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,6 +258,16 @@
           clip-path: inset(0 0 100% 0);
           transform: translate(0);
         }
+      }
+
+      .h1-converter {
+        display: block;
+        font-size: clamp(0.875rem, 2.5vw, 1.375rem);
+        color: var(--cyan);
+        text-shadow: 0 0 10px var(--glow-cyan), 0 0 30px rgba(0, 217, 255, 0.4);
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
+        letter-spacing: 0.08em;
       }
 
       h2 {
@@ -736,10 +808,10 @@
       <span class="header-meta-score">CREDIT: 00</span>
     </div>
 
+    <main>
     <header>
       <p class="press-start">&#9654; PRESS START &#9664;</p>
-      <h1 data-text="8-BIT PHOTO">8-BIT PHOTO</h1>
-      <h2>CONVERTER</h2>
+      <h1 data-text="8-BIT PHOTO">8-BIT PHOTO <span class="h1-converter">CONVERTER</span></h1>
       <p class="subtitle">TRANSFORM YOUR PHOTOS INTO AUTHENTIC RETRO PIXEL ART</p>
     </header>
 
@@ -865,6 +937,7 @@
         </div>
       </section>
     </div>
+    </main>
 
     <footer>
       <div class="footer-inner">
