@@ -166,6 +166,7 @@ function handleImageUpload(file) {
       placeholder.style.display = 'none';
       controls.classList.add('active');
       actions.classList.add('active');
+      canvasContainer.classList.add('has-image');
       processImage();
       showToast('IMAGE LOADED!');
     };
@@ -192,6 +193,7 @@ function clearImage() {
   placeholder.style.display = 'flex';
   controls.classList.remove('active');
   actions.classList.remove('active');
+  canvasContainer.classList.remove('has-image');
   fileInput.value = '';
   showToast('IMAGE CLEARED');
 }
@@ -220,12 +222,19 @@ clearBtn.addEventListener('click', clearImage);
 canvasContainer.addEventListener('dragover', (e) => {
   e.preventDefault();
   e.stopPropagation();
+  canvasContainer.classList.add('drag-over');
+});
+
+canvasContainer.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  canvasContainer.classList.remove('drag-over');
 });
 
 canvasContainer.addEventListener('drop', (e) => {
   e.preventDefault();
   e.stopPropagation();
-  
+  canvasContainer.classList.remove('drag-over');
+
   const file = e.dataTransfer.files[0];
   if (file) {
     handleImageUpload(file);
